@@ -4,7 +4,12 @@ const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
 const path = require('path')
+
 const admin = require('./routes/api/admins')
+const member = require('./routes/api/members')
+const highBoard = require('./routes/api/highboards')
+const applicant = require('./routes/api/applicants')
+
 // Require Router Handlers
 const app = express()
 
@@ -33,6 +38,10 @@ app.use(cors())
 
 // Direct routes to appropriate files
 app.use('/api/admins', admin)
+app.use('/api/members', member)
+app.use('/api/highboards', highBoard)
+app.use('/api/applicants', applicant)
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
