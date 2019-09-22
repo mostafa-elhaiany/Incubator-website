@@ -6,7 +6,7 @@ module.exports = {
       fullName: Joi.string().min(3).max(80).required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(8).required(),
-      comittee: Joi.string().required().min(10),
+      committee: Joi.string().required().min(10),
       reservation: Joi.object().keys({
         day: Joi.string().required(),
         slot:Joi.number.require()
@@ -21,7 +21,7 @@ module.exports = {
       fullName: Joi.string().min(3).max(80),
       email: Joi.string().email(),
       password: Joi.string().min(8),
-      comittee: Joi.string().required().min(10)
+      committee: Joi.string().required().min(10)
     }
     return Joi.validate(req, updateSchema)
   }

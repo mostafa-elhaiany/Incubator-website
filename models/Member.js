@@ -14,7 +14,7 @@ const MemberSchema = new Schema({
     type: String,
     required: true
   },
-  comittee:{
+  committee:{
       type: String,
       required:true
   }
