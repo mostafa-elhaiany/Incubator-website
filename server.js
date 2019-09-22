@@ -42,7 +42,7 @@ app.use('/api/admins', admin)
 app.use('/api/members', member)
 app.use('/api/highboards', highBoard)
 app.use('/api/applicants', applicant)
-app.use('/api/committees', applicant)
+app.use('/api/committees', committee)
 
 
 if (process.env.NODE_ENV === 'production') {

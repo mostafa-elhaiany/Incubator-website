@@ -9,7 +9,7 @@ module.exports = {
       committee: Joi.string().required().min(10),
       reservation: Joi.object().keys({
         day: Joi.string().required(),
-        slot:Joi.number.require()
+        slot:Joi.number().require()
       })
 
     }
