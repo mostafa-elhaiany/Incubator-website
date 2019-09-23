@@ -46,12 +46,12 @@ export default class AppNavbar extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                      register
-                      <NavLink href="/register/" />
+                      <a href="/register/">register</a>
+                      {/* <NavLink href="/register/" ></NavLink> */}
                   </DropdownItem>
                   <DropdownItem>
-                     login
-                     <NavLink href="/login/" />
+                    <a href="/login/">login</a>
+                    {/* <NavLink href="/login/" /> */}
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>

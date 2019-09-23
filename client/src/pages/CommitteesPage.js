@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import {Container,ListGroup,ListGroupItem,Button} from 'reactstrap'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import axios from 'axios'
+import CommitteeCard from '../components/CommitteeCard'
 class CommitteesPage extends Component{
     state={
         loaded:false,
-        items:[]
+        items:[],
+        chosen:"",
+        didChoose:false
+
     }
     componentDidMount(){
         axios.get('/api/committees')
@@ -14,15 +18,35 @@ class CommitteesPage extends Component{
             loaded:true
         }))
     }
+    choose = (committee)=>{
+            this.setState({
+                chosen:committee,
+                didChoose:true
+            })
+    }
     render()
     {
-        console.log(this.state.items)
         return this.state.loaded?
         (
-            <div>
-                <p>loaded</p>
-                
-            </div>
+            this.state.didChoose?
+            (
+                <div>
+                    <p>you chose {this.state.chosen}</p>
+                    <a href="/committees/" className="btn btn-primary">Back</a>
+                </div>
+            )
+            :
+            (
+                <div className="container">
+                {this.state.items.map(item=>{
+                    return (
+                        <div>
+                        <CommitteeCard choose={this.choose} item={item}  />
+                        </div>
+                    )
+                })}
+                </div>
+            )
         )
         :
         (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class HomePage extends Component {
+class NotFound extends Component {
   render () {
     return (
         <div>
@@ -10,4 +10,4 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage
+export default NotFound
