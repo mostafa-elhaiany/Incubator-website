@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import AppNavbar from './components/generic/AppNavbar'
+import CommitteesPage from './pages/CommitteesPage'
 
 class App extends Component {
   render () {
@@ -14,6 +15,7 @@ class App extends Component {
           <AppNavbar/>
             <Switch>
               <Route exact path='/' component={HomePage} />
+              <Route exact path='/committees' component={CommitteesPage} />
               <Route exact path='/*' component={NotFound} />
             </Switch>
         </Router>
