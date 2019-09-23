@@ -29,7 +29,7 @@ export default class AppNavbar extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/">Incubator</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -46,10 +46,12 @@ export default class AppNavbar extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                      <NavLink href="/register/">register</NavLink>
+                      register
+                      <NavLink href="/register/" />
                   </DropdownItem>
                   <DropdownItem>
-                     <NavLink href="/login/">login</NavLink>
+                     login
+                     <NavLink href="/login/" />
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
