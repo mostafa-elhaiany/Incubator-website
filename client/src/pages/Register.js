@@ -20,7 +20,9 @@ class Register extends Component {
       Confirm:"",
       First:"",
       Second:"",
-      why:""
+      why:"",
+      day:"",
+      slot:""
   }
 
   Input = (e)=>{
@@ -49,6 +51,12 @@ class Register extends Component {
     else if(e.target.name==='text'){
       this.setState({why:e.target.value})
     }
+  }
+  Reserve= (schedule)=>{
+    this.setState({
+      slot:schedule.slot,
+      day:schedule.day
+    })
   }
   submit = (e)=>{
     e.preventDefault()
@@ -79,7 +87,7 @@ class Register extends Component {
            {(this.state.percentage===0?
                 <Progress/>
             :
-            <Progress color="success" value="50" />)}
+            <Progress color="success" value={this.state.percentage} />)}
            
         <h1>Registeration</h1>
         <p>keyboard buttons swipe back and forth to complete Registeration</p>
@@ -126,9 +134,9 @@ class Register extends Component {
             <h3>Choose  a reservation slot</h3>
             {this.state.schedules.map(schedule =>{
               if(!schedule.reserved)
-                  return <Button className="btn btn-primary">Choose {schedule.day} {schedule.slot}</Button>
+                  return (<div><Button onclick={()=>this.Reserve(schedule)} className="btn btn-primary">Choose {schedule.day} {schedule.slot}</Button> <br/></div>)
               else 
-                  return <Button className="btn btn-danger">{schedule.day} {schedule.slot} reserved already!</Button>   
+                  return (<div><Button className="btn btn-danger">{schedule.day} {schedule.slot} reserved already!</Button><br/></div>)
                  
             })}
         </div>
