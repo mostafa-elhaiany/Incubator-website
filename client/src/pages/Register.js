@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import Axios from 'axios';
 import SwipeableViews from 'react-swipeable-views';
-import { bindKeyboard } from 'react-swipeable-views-utils';
 import { Spinner } from 'reactstrap';
 import { Progress } from 'reactstrap';
+import { Table } from 'reactstrap';
+//import { bindKeyboard } from 'react-swipeable-views-utils';
 
-const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
+//const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 
 class Register extends Component {
   state={
@@ -22,7 +23,17 @@ class Register extends Component {
       Second:"",
       why:"",
       day:"",
-      slot:""
+      slot:"",
+      validEmail:"",
+      validName:"",
+      validPassword:"",
+      validConfirm:"",
+      validWhy:"",
+      errorMsgConfirm:"",
+      errorMsgEmail:"",
+      errorMsgName:"",
+      errorMsgPassword:"",
+      errorMsgWhy:"",
   }
 
   Input = (e)=>{
@@ -91,24 +102,61 @@ class Register extends Component {
            
         <h1>Registeration</h1>
         <p>keyboard buttons swipe back and forth to complete Registeration</p>
-            <BindKeyboardSwipeableViews>
-            <div>
+            {/* <BindKeyboardSwipeableViews> */}
             <Form onSubmit={(e)=>this.submit(e)}>
+            <SwipeableViews enableMouseEvents>
+            <div>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="test@mail.com" onInput={(e)=>this.Input(e)}/>
+          <Input type="email" name="email" id="exampleEmail" placeholder="test@mail.com" onInput={(e)=>this.Input(e)}
+           valid={this.state.validEmail === 'safe'}
+           invalid={this.state.validEmail === 'danger'}
+          />
+          <FormFeedback valid>
+            All good!
+          </FormFeedback>
+          <FormFeedback>
+            {`Uh Oh! ${this.state.errorMsgEmail}`}
+          </FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for="exampleName">FullName</Label>
-          <Input type="name" name="name" id="exampleName" placeholder="jane doe" onInput={(e)=>this.Input(e)}/>
+          <Input type="name" name="name" id="exampleName" placeholder="jane doe" onInput={(e)=>this.Input(e)}
+          valid={this.state.validName === 'safe'}
+          invalid={this.state.validName === 'danger'}
+         />
+         <FormFeedback valid>
+           All good!
+         </FormFeedback>
+         <FormFeedback>
+           {`Uh Oh! ${this.state.errorMsgName}`}
+         </FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">Password</Label>
-          <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" onInput={(e)=>this.Input(e)}/>
+          <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" onInput={(e)=>this.Input(e)}
+           valid={this.state.validPassword === 'safe'}
+           invalid={this.state.validPassword === 'danger'}
+          />
+          <FormFeedback valid>
+            All good!
+          </FormFeedback>
+          <FormFeedback>
+            {`Uh Oh! ${this.state.errorMsgPassword}`}
+          </FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">Confirm Password</Label>
-          <Input type="password" name="Confirmpassword" id="exampleConfirmPassword" placeholder="password placeholder" onInput={(e)=>this.Input(e)}/>
+          <Input type="password" name="Confirmpassword" id="exampleConfirmPassword" placeholder="password placeholder" onInput={(e)=>this.Input(e)}
+           valid={this.state.validConfirm === 'safe'}
+           invalid={this.state.validConfirm === 'danger'}
+          />
+          <FormFeedback valid>
+            All good!
+          </FormFeedback>
+          <FormFeedback>
+            {`Uh Oh! ${this.state.errorMsgConfirm}`}
+          </FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for="exampleSelectFirst">First prefrence</Label>
@@ -124,27 +172,72 @@ class Register extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="exampleText">Why did you apply for this committee?</Label>
-          <Input type="textarea" name="text" id="exampleText" onInput={(e)=>this.Input(e)}/>
+          <Input type="textarea" name="text" id="exampleText" onInput={(e)=>this.Input(e)}
+           valid={this.state.validWhy === 'safe'}
+           invalid={this.state.validWhy === 'danger'}
+          />
+          <FormFeedback valid>
+            All good!
+          </FormFeedback>
+          <FormFeedback>
+            {`Uh Oh! ${this.state.errorMsgWhy}`}
+          </FormFeedback>
         </FormGroup>
-        <Button onclick={(e)=>this.submit(e)}>Submit</Button>
-      </Form>
         </div>
 
         <div>
             <h3>Choose  a reservation slot</h3>
-            {this.state.schedules.map(schedule =>{
-              if(!schedule.reserved)
-                  return (<div><Button onclick={()=>this.Reserve(schedule)} className="btn btn-primary">Choose {schedule.day} {schedule.slot}</Button> <br/></div>)
-              else 
-                  return (<div><Button className="btn btn-danger">{schedule.day} {schedule.slot} reserved already!</Button><br/></div>)
-                 
-            })}
+
+            <Table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Slot</th>
+                <th>Reserve</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.schedules.map(schedule =>{
+              const x= (
+                <tr>
+                <td>{schedule.day}</td>
+                <td>{schedule.slot}</td>
+                <td>{
+                  !schedule.reserved?
+                   (<div>
+                     <Button 
+                        name="nonReservedSubmit"
+                        onclick={()=>this.Reserve(schedule)} 
+                        className="btn btn-primary">
+                          Choose {schedule.day} {schedule.slot}
+                      </Button> 
+                      <br/>
+                      </div>)
+                  : 
+                  (<div><Button name="reservedSubmit" className="btn btn-danger">{schedule.day} {schedule.slot} reserved already!</Button><br/></div>)
+                }</td>
+               </tr>
+              )
+              return x
+                })}
+               
+              
+            </tbody>
+          </Table>
+
+
+
+
+           
         </div>
 
         <div>
             <h3>one more </h3>
         </div>
-        </BindKeyboardSwipeableViews>
+        </SwipeableViews>
+            <Button onclick={(e)=>this.submit(e)}>Submit</Button>
+          </Form>
+        {/* </BindKeyboardSwipeableViews> */}
         </div>
 
     )

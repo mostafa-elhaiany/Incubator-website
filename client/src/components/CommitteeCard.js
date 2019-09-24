@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle, Button
   } from 'reactstrap';
   
 class NotFound extends Component {
