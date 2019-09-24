@@ -27,6 +27,22 @@ const ApplicantSchema = new Schema({
           type:Number,
           required:true
       }
+  },
+  firstPrefrence: {
+    type: String,
+    required:true
+  },
+  secondPrefrence: {
+    type: String,
+    required:true
+  },
+  why:{
+    type: String,
+    required:true
+  },
+  id: {
+    type: String,
+    required:true
   }
 })
 

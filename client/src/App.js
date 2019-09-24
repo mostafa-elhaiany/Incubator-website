@@ -8,6 +8,7 @@ import AppNavbar from './components/generic/AppNavbar'
 import CommitteesPage from './pages/CommitteesPage'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import HeadAddSlots from './pages/HeadAddSlots'
 
 class App extends Component {
   render () {
@@ -20,6 +21,7 @@ class App extends Component {
               <Route exact path='/committees' component={CommitteesPage} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
+              <Route exact path='/headAddSlots' component={HeadAddSlots} />
               <Route exact path='/*' component={NotFound} />
             </Switch>
         </Router>

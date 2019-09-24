@@ -10,6 +10,7 @@ const member = require('./routes/api/members')
 const highBoard = require('./routes/api/highboards')
 const applicant = require('./routes/api/applicants')
 const committee = require('./routes/api/committees')
+const schedule = require('./routes/api/schedules')
 
 // Require Router Handlers
 const app = express()
@@ -43,6 +44,7 @@ app.use('/api/members', member)
 app.use('/api/highboards', highBoard)
 app.use('/api/applicants', applicant)
 app.use('/api/committees', committee)
+app.use('/api/schedules', schedule)
 
 
 if (process.env.NODE_ENV === 'production') {

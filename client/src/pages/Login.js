@@ -2,16 +2,23 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 class Login extends Component {
+    state={
+        email:"",
+        password:"",
+        type:"User"
+
+    }
+
     selectUser = (e)=>{
-        console.log(e.target.value)
+        this.setState({type:e.target.value})
     }
     
     inputEmail = (e)=>{
-        console.log(e.target.value)
+        this.setState({email:e.target.value})
     }
     
     inputPassword = (e)=>{
-        console.log(e.target.value)
+        this.setState({password:e.target.value})
     }
     render () {
     return (
