@@ -24,8 +24,6 @@ class HeadAddSlots extends Component {
         .then(res=>this.setState({Highboards:res.data.data,loaded:true}))
         .then(console.log('ssss'))
         .catch(err=>console.log(err))
-
-
     }
     selectDay = (e)=>{
         this.setState({Day:e.target.value})
@@ -70,61 +68,68 @@ class HeadAddSlots extends Component {
         }
 
     }
- 
+    
+    form = ()=>{
+        return (
+            <Form>
+            <FormGroup>
+                    <Label for="exampleSelectHead">Head to interview</Label>
+                    <Input type="select" name="selectHead" id="exampleSelectHead" onClick={(e)=>this.selectHead(e)}>
+                        <option>Select Interviewer</option>
+                       {this.state.Highboards.map(head=>{
+                           return <option>{head.fullName}</option>
+                           
+                        })}
+                    </Input>
+            </FormGroup>
+            <FormGroup>
+                    <Label for="exampleSelectHead">Committee</Label>
+                    <Input type="select" name="selectHead" id="exampleSelectHead" onClick={(e)=>this.selectCommittee(e)}>
+                        <option>Select Committee</option>
+                        {this.state.committees.map(committee=>{
+                            return <option>{committee.name}</option>
+                            
+                        })}
+                    </Input>
+            </FormGroup>
+            <FormGroup>
+                    <Label for="exampleSelectDay">Day</Label>
+                    <Input type="select" name="selectDay" id="exampleSelectDay" onClick={(e)=>this.selectDay(e)}>
+                        <option>Select Day</option>
+                        <option>Sunday</option>
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>wednesday</option>
+                        <option>Thursday</option>
+                    </Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="exampleSelect">Slot</Label>
+                    <Input type="select" name="selectSlot" id="exampleSelectSlot" onClick={(e)=>this.selectSlot(e)}>
+                        <option>Select Slot</option>
+                        <option>First</option>
+                        <option>gap first and second</option>
+                        <option>Second</option>
+                        <option>gap second and third</option>
+                        <option>Third</option>
+                        <option>gap third and fourth</option>
+                        <option>fourth</option>
+                        <option>gap fourth and fifth</option>
+                        <option>fifth</option>
+                        <option>after hours</option>
+                    </Input>
+                </FormGroup>
+                <Button onClick={(e)=>this.submit(e)}>Submit</Button>
+            </Form>
+        )
+    }
+    
+        
     render () {
-    return this.state.loaded?
+        return this.state.loaded?
         (
-            <div>
-                <Form>
-                <FormGroup>
-                        <Label for="exampleSelectHead">Head to interview</Label>
-                        <Input type="select" name="selectHead" id="exampleSelectHead" onClick={(e)=>this.selectHead(e)}>
-                            <option>Select Interviewer</option>
-                           {this.state.Highboards.map(head=>{
-                                return <option>{head.fullName}</option>
-
-                            })}
-                        </Input>
-                </FormGroup>
-                <FormGroup>
-                        <Label for="exampleSelectHead">Committee</Label>
-                        <Input type="select" name="selectHead" id="exampleSelectHead" onClick={(e)=>this.selectCommittee(e)}>
-                            <option>Select Committee</option>
-                            {this.state.committees.map(committee=>{
-                                return <option>{committee.name}</option>
-
-                            })}
-                        </Input>
-                </FormGroup>
-                <FormGroup>
-                        <Label for="exampleSelectDay">Day</Label>
-                        <Input type="select" name="selectDay" id="exampleSelectDay" onClick={(e)=>this.selectDay(e)}>
-                            <option>Select Day</option>
-                            <option>Sunday</option>
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>wednesday</option>
-                            <option>Thursday</option>
-                        </Input>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="exampleSelect">Slot</Label>
-                        <Input type="select" name="selectSlot" id="exampleSelectSlot" onClick={(e)=>this.selectSlot(e)}>
-                            <option>Select Slot</option>
-                            <option>First</option>
-                            <option>gap first and second</option>
-                            <option>Second</option>
-                            <option>gap second and third</option>
-                            <option>Third</option>
-                            <option>gap third and fourth</option>
-                            <option>fourth</option>
-                            <option>gap fourth and fifth</option>
-                            <option>fifth</option>
-                            <option>after hours</option>
-                        </Input>
-                    </FormGroup>
-                    <Button onClick={(e)=>this.submit(e)}>Submit</Button>
-                </Form>
+            <div className="container">
+                {this.form()}
             </div>
         )
         :

@@ -9,6 +9,7 @@ import CommitteesPage from './pages/CommitteesPage'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import HeadAddSlots from './pages/HeadAddSlots'
+import About from './pages/About'
 
 class App extends Component {
   render () {
@@ -22,6 +23,7 @@ class App extends Component {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/headAddSlots' component={HeadAddSlots} />
+              <Route exact path='/about' component={About} />
               <Route exact path='/*' component={NotFound} />
             </Switch>
         </Router>
