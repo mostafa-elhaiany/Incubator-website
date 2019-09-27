@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
 import Fade from 'react-reveal/Fade';
+import Axios from 'axios';
 
 
 class About extends Component {
-  
+  state={
+    loaded:false,
+    committees:[]
+  }
+
+
+  componentDidMount(){
+    Axios.get('/api/committees/')
+    .then(res=>this.setState({committees:res.data.data,loaded:true}))
+    .catch(err=>console.log(err))
+  }
+
 render () {
     return (
         <div className="container">
@@ -52,9 +64,12 @@ render () {
             <div className="jumbotron">
             <Fade left opposite cascade>
                 <div>
-                <p>Fundraising</p>
-                <p>Marketing</p>
-                <p>Events Coordination</p>
+                {this.state.committees.map(
+                 committee=>{
+                   if(committee.type==='organizing')
+                    return <p>{committee.name}</p>
+                 }
+               )}
               </div>
             </Fade>
              </div>
@@ -62,35 +77,17 @@ render () {
             <div className="jumbotron">
             <Fade left opposite cascade>
                 <div>
-                <p>Smart Problem Solvers</p>
-                <p>Affective Computing</p>
-                <p>Lab On Chip</p>
-                <p>BioInformatics</p>
+               {this.state.committees.map(
+                 committee=>{
+                   if(committee.type==='projects')
+                    return <p>{committee.name}</p>
+                 }
+               )}
               </div>
             </Fade>
              </div>
             </Fade>
     </div>
-
-  
-        // <div className="container">
-        // <h3>About Us!</h3>
-
-        //     <p> 
-        //         Incubator is the first scientifice club in the GUC, in this club we aim to decrease the gap between different majors
-        //     </p>
-        //     <p>
-        //         imagine wanting to apply in a certain field, but you cant apply bc its different majors or that you dont have the right qualifications
-        //         what we do is that we teach you about certain prosspering fields and tell you how you
-        //         can research in those fields and any other field you wanna be a research in
-        //         even if it isn't your major, even if it isn't something you know
-        //         if you're ready to learn, and you're dedicated enough, come join us
-        //         we'll show you the right path <br/>
-                
-        //         <bold>INCUBATE YOUR PASSION</bold>  </p>
-
-        //         <a href="/committees/" className="btn btn-primary">go to comittees</a>
-        // </div>
     )
   }
 }
