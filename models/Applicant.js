@@ -21,7 +21,7 @@ const ApplicantSchema = new Schema({
           required:true
       },
       slot:{
-          type:Number,
+          type:String,
           required:true
       }
   },

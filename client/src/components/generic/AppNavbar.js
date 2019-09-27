@@ -10,9 +10,11 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem } from 'reactstrap'
+  import { connect } from 'react-redux'
 
-export default class AppNavbar extends React.Component {
+
+class AppNavbar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -27,6 +29,50 @@ export default class AppNavbar extends React.Component {
     });
   }
   render() {
+    var x = (<div></div>)
+    if(this.props.isAuthenticated)
+    {
+       x=(
+        <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  More
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                      <a href="/profile/">My Profile</a>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <a href="/logout/">logout</a>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    Cancel
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+      )
+    }
+    else {
+       x= (
+            <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret>
+              More
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem>
+                  <a href="/register/">register</a>
+              </DropdownItem>
+              <DropdownItem>
+                <a href="/login/">login</a>
+              </DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem>
+                Cancel
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+            )
+    }
     return (
       <div>
         <Navbar color="dark" dark expand="md">
@@ -40,25 +86,7 @@ export default class AppNavbar extends React.Component {
               <NavItem>
                 <NavLink href="/about/">about</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  More
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                      <a href="/register/">register</a>
-                      {/* <NavLink href="/register/" ></NavLink> */}
-                  </DropdownItem>
-                  <DropdownItem>
-                    <a href="/login/">login</a>
-                    {/* <NavLink href="/login/" /> */}
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Cancel
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {x}
             </Nav>
           </Collapse>
         </Navbar>
@@ -66,3 +94,12 @@ export default class AppNavbar extends React.Component {
     );
   }
 }
+const mapStateToProps = state =>({
+  isAuthenticated:state.auth.isAuthenticated,
+  error:state.error
+})
+
+export default connect(
+  mapStateToProps,
+  { }
+)(AppNavbar)

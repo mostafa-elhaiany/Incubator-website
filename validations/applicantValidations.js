@@ -8,7 +8,7 @@ module.exports = {
       password: Joi.string().min(8).required(),
       reservation: Joi.object().keys({
         day: Joi.string().required(),
-        slot:Joi.number().required()
+        slot:Joi.string().required()
       }),
       firstPrefrence: Joi.string().required(),
       secondPrefrence: Joi.string().required(),
