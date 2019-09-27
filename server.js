@@ -11,7 +11,6 @@ const highBoard = require('./routes/api/highboards')
 const applicant = require('./routes/api/applicants')
 const committee = require('./routes/api/committees')
 const schedule = require('./routes/api/schedules')
-
 // Require Router Handlers
 const app = express()
 

@@ -8,15 +8,12 @@ const ApplicantSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique:true
   },
   password: {
     type: String,
     required: true
-  },
-  committee:{
-      type: String,
-      required:true
   },
   reservation: {
       day:{
@@ -40,7 +37,7 @@ const ApplicantSchema = new Schema({
     type: String,
     required:true
   },
-  id: {
+  GUC_ID: {
     type: String,
     required:true
   }
