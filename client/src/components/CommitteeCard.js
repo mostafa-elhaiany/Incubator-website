@@ -4,7 +4,7 @@ import {
     CardTitle, Button
   } from 'reactstrap';
   
-class NotFound extends Component {
+class CommitteCard extends Component {
     state={
         title:this.props.item.name,
         text:this.props.item.description,
@@ -27,4 +27,4 @@ class NotFound extends Component {
   }
 }
 
-export default NotFound
+export default CommitteCard

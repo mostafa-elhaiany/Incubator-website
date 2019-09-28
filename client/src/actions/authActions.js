@@ -25,6 +25,7 @@ export const loadUser = () => (dispatch, getState) => {
         })
       )
       .catch(err => {
+        console.log(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch({
           type: AUTH_ERROR
@@ -63,7 +64,7 @@ export const applicantLogin= (body)=>dispatch =>{
       }
     axios.post('/api/applicants/auth',body,config)
     .then(res=>{
-        dispatch({type:REGISTER_SUCCESS,
+        dispatch({type:LOGIN_SUCCESS,
             payload:res.data})    
     })
     .catch(err=>{
@@ -74,7 +75,12 @@ export const applicantLogin= (body)=>dispatch =>{
     })
 }
 
-
+//LOGOUT
+export const logout = ()=>{
+  return {
+    type:LOGOUT_SUCCESS
+  }
+}
 
 // Setup config/headers and token
 export const tokenConfig = getState => {

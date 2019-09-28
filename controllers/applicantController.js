@@ -1,6 +1,7 @@
 // Entity model and validator
 const Model = require('../models/Applicant')
 const validator = require('../validations/applicantValidations')
+const authValidator=require('../validations/authValidations')
 const main = require('./main')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -92,7 +93,7 @@ exports.auth = async (req,res) =>{
       msg:"body can't be empty"
     })
   }
-  const valid = validator.authValidation(body)
+  const valid = authValidator.authValidation(body)
   if (valid.error) {
     return res.status(400).json({
       status: 'error',
@@ -127,7 +128,8 @@ exports.auth = async (req,res) =>{
             res.json({
               status:'success',
               token,
-              data:applicant
+              data:applicant,
+              type:'applicant'
             })
           }
         )  

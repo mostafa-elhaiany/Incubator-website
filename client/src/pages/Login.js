@@ -56,9 +56,8 @@ class Login extends Component {
             }
         }
         if(this.props.isAuthenticated){
-          alert('you are now registered see you on your interview slot :D')
-          this.props.history.push(`/profile/`)
-        }
+            this.props.history.push(`/profile/`)
+          }
       }
       
 

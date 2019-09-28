@@ -33,12 +33,4 @@ module.exports = {
     return Joi.validate(req, updateSchema)
   },
 
-  authValidation: req => {
-    const updateSchema = {
-      email: Joi.string().email(),
-      password: Joi.string().min(8),
-      GUC_ID: Joi.string()
-    }
-    return Joi.validate(req, updateSchema)
-  }
 }
