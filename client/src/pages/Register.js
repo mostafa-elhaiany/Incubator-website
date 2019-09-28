@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
-import Axios from 'axios';
-import SwipeableViews from 'react-swipeable-views';
-import { Spinner } from 'reactstrap';
-import { Progress } from 'reactstrap';
-import { Table } from 'reactstrap';
+import { Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormFeedback,
+  Spinner,
+  Progress,
+  Table,
+  Alert} from 'reactstrap'
+import Axios from 'axios'
+import SwipeableViews from 'react-swipeable-views'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { register } from '../actions/authActions';
+import { clearErrors } from '../actions/errorActions';
+
 //import { bindKeyboard } from 'react-swipeable-views-utils';
 
 //const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
@@ -24,6 +35,7 @@ class Register extends Component {
       why:"",
       day:"",
       slot:"",
+      id:"",
       validEmail:"",
       validName:"",
       validPassword:"",
@@ -34,9 +46,16 @@ class Register extends Component {
       errorMsgName:"",
       errorMsgPassword:"",
       errorMsgWhy:"",
+      message:null
+  }
+  static propTypes = {
+    isAuthenticated:PropTypes.bool,
+    error:PropTypes.object.isRequired,
+    register: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired
   }
 
-  Input = (e)=>{
+  Input = async (e,schedule)=>{
     if(e.target.name==='email'){
       this.setState({email:e.target.value})
     }
@@ -62,20 +81,39 @@ class Register extends Component {
     else if(e.target.name==='text'){
       this.setState({why:e.target.value})
     }
+    else if(e.target.name==='id'){
+      this.setState({id:e.target.value})
+    }
+    else if(e.target.name==='reserve'){
+      await this.setState({
+        slot:schedule.slot,
+        day:schedule.day
+      })
+    }
   }
-  Reserve= (schedule)=>{
-    this.setState({
-      slot:schedule.slot,
-      day:schedule.day
-    })
-  }
+ 
   submit = (e)=>{
     e.preventDefault()
-    if(!this.state.firstSubmitted)
-      this.setState({firstSubmitted:true, percentage:(1/3*100)})  
+    console.log(this.state)
+      const newApplcant = {
+        email:this.state.email,
+        fullName:this.state.name,
+        password:this.state.password,
+        firstPrefrence:this.state.First,
+        secondPrefrence:this.state.Second,
+        why:this.state.why,
+        reservation:{
+          day:this.state.day,
+          slot:this.state.slot
+    },
+    GUC_ID:this.state.id
   }
-  componentDidMount(){
+  
+  this.props.register(newApplcant) 
+}
 
+  componentDidMount(){
+    
       Axios.get('/api/schedules')
       .then(res=>{this.setState({
         schedules:res.data.data
@@ -88,8 +126,27 @@ class Register extends Component {
       .catch(err=>console.log(err))
   }
   
+  componentDidUpdate(prevProps){
+    const {error}= this.props
+
+    if(error !== prevProps.error){
+        if(error.id==='REGISTER_FAIL'){
+          if(error.msg.message)
+              this.setState({message:error.msg.message})
+          else if(error.msg.msg)
+            this.setState({message:error.msg.msg})    
+        }
+        else{
+          this.setState({message:null})
+        }
+    }
+    if(this.props.isAuthenticated){
+      alert('you are now registered see you on your interview slot :D')
+      this.props.history.push(`/`)
+    }
+  }
+  
     render () {
-      console.log(this.state)
     return this.state.loaded ?
     (
         <div>
@@ -101,6 +158,14 @@ class Register extends Component {
             <Progress color="success" value={this.state.percentage} />)}
            
         <h1>Registeration</h1>
+        { 
+          this.state.message ?
+         <Alert color="danger">
+            {this.state.message}
+         </Alert>
+         :
+         <div></div>
+        }
         <p>keyboard buttons swipe back and forth to complete Registeration</p>
             {/* <BindKeyboardSwipeableViews> */}
             <Form onSubmit={(e)=>this.submit(e)}>
@@ -122,6 +187,19 @@ class Register extends Component {
         <FormGroup>
           <Label for="exampleName">FullName</Label>
           <Input type="name" name="name" id="exampleName" placeholder="jane doe" onInput={(e)=>this.Input(e)}
+          valid={this.state.validName === 'safe'}
+          invalid={this.state.validName === 'danger'}
+         />
+         <FormFeedback valid>
+           All good!
+         </FormFeedback>
+         <FormFeedback>
+           {`Uh Oh! ${this.state.errorMsgName}`}
+         </FormFeedback>
+        </FormGroup>
+         <FormGroup>
+          <Label for="exampleName">GUC ID</Label>
+          <Input type="id" name="id" id="exampleid" placeholder="xx-xxxx" onInput={(e)=>this.Input(e)}
           valid={this.state.validName === 'safe'}
           invalid={this.state.validName === 'danger'}
          />
@@ -161,12 +239,14 @@ class Register extends Component {
         <FormGroup>
           <Label for="exampleSelectFirst">First prefrence</Label>
           <Input type="select" name="selectFirst" id="exampleSelectFirst" onInput={(e)=>this.Input(e)}>
+          <option>Choose first prefrence</option>
             {this.state.committees.map(committee=><option>{committee.name}</option>)}
           </Input>
         </FormGroup>
         <FormGroup>
           <Label for="exampleSelectSecond">Second prefrence</Label>
           <Input type="select" name="selectSecond" id="exampleSelectSecond" onInput={(e)=>this.Input(e)}>
+           <option>Choose second prefrence</option>
             {this.state.committees.map(committee=><option>{committee.name}</option>)}
           </Input>
         </FormGroup>
@@ -205,16 +285,22 @@ class Register extends Component {
                 <td>{
                   !schedule.reserved?
                    (<div>
-                     <Button 
-                        name="nonReservedSubmit"
-                        onclick={()=>this.Reserve(schedule)} 
-                        className="btn btn-primary">
-                          Choose {schedule.day} {schedule.slot}
-                      </Button> 
+                      <FormGroup check>
+                      <Label check>
+                      <Input type="radio" name="reserve" onInput={(e)=>this.Input(e,schedule)} />{' '}
+                      Choose {schedule.day} {schedule.slot}
+                      </Label>
+                    </FormGroup>
                       <br/>
                       </div>)
                   : 
-                  (<div><Button name="reservedSubmit" className="btn btn-danger">{schedule.day} {schedule.slot} reserved already!</Button><br/></div>)
+                  (<div><FormGroup check disabled>
+                        <Label check>
+                          <Input type="radio" name="radio1" disabled />{' '}
+                          {schedule.day} {schedule.slot} reserved already!
+                        </Label>
+                      </FormGroup>
+                  </div>)
                 }</td>
                </tr>
               )
@@ -250,5 +336,13 @@ class Register extends Component {
     )
   }
 }
+const mapStateToProps = state =>({
+  isAuthenticated:state.auth.isAuthenticated,
+  error:state.error
+})
 
-export default Register
+
+export default connect(
+  mapStateToProps,
+  { register, clearErrors }
+)(Register)

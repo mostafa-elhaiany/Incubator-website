@@ -10,10 +10,17 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import HeadAddSlots from './pages/HeadAddSlots'
 import About from './pages/About'
-
+import {loadUser} from './actions/authActions'
+import {Provider} from 'react-redux'
+import store from './store'
+import Profile from './pages/Profile'
 class App extends Component {
+  componentDidMount(){
+    store.dispatch(loadUser())
+  }
   render () {
     return (
+      <Provider store={store}>
       <React.Fragment >
         <Router >
           <AppNavbar/>
@@ -24,10 +31,12 @@ class App extends Component {
               <Route exact path='/login' component={Login} />
               <Route exact path='/headAddSlots' component={HeadAddSlots} />
               <Route exact path='/about' component={About} />
+              <Route exact path='/profile' component={Profile} />
               <Route exact path='/*' component={NotFound} />
             </Switch>
         </Router>
       </React.Fragment>
+      </Provider>
     )
   }
 }
