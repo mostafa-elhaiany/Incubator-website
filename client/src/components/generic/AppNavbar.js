@@ -48,7 +48,7 @@ class AppNavbar extends React.Component {
                       <a href="/profile/">My Profile</a>
                   </DropdownItem>
                   <DropdownItem>
-                    <a onClick={this.props.logout} href="" >Logout</a>
+                    <a onClick={this.props.logout} href="/" >Logout</a>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>

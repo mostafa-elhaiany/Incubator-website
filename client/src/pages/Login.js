@@ -33,6 +33,7 @@ class Login extends Component {
             password:this.state.password,
            }
         
+        console.log('logging in')
         this.props.login(user) 
     }
     componentDidUpdate(prevProps){

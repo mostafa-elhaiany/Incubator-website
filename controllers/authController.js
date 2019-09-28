@@ -27,27 +27,27 @@ exports.auth = async (req,res) =>{
 
   var curr= await applicant.findOne({email:body.email})
   if(curr)
-    return this.authHelper(curr,body,'Applicant')
+    return this.authHelper(res,curr,body,'Applicant')
 
   else{
-    
+
      curr= await member.findOne({email:body.email})
 
      if(curr)
-       return this.authHelper(curr,body,'Member')
+       return this.authHelper(res,curr,body,'Member')
 
     else{
 
       curr= await highBoard.findOne({email:body.email})
 
       if(curr)
-        return this.authHelper(curr,body,'Highboard')
+        return this.authHelper(res,curr,body,'Highboard')
 
       else{
           curr= await admin.findOne({email:body.email})
 
           if(curr)
-            return this.authHelper(curr,body,'Admin')
+            return this.authHelper(res,curr,body,'Admin')
 
           else{
               return res.status(400).json({
@@ -60,7 +60,7 @@ exports.auth = async (req,res) =>{
   }
 }
 
-exports.authHelper = async (user,body,type)=>{
+exports.authHelper = async (res,user,body,type)=>{
   bcrypt.compare(body.password, user.password)
   .then(match=>{
     if(!match) return res.status(400).json({

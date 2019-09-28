@@ -15,21 +15,23 @@ import {
 export const loadUser = () => (dispatch, getState) => {
     // User loading
     dispatch({ type: USER_LOADING })
-  
     axios
       .get('/api/auth/user', tokenConfig(getState))
-      .then(res =>
+      .then(res =>{
         dispatch({
           type: USER_LOADED,
-          payload: res.data
-        })
+          payload: res.data.data
+        })}
       )
-      .catch(err => {
-        console.log(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
-        dispatch({
-          type: AUTH_ERROR
-        })
+      .catch(error => {
+        try{
+          dispatch(returnErrors((error.response || {}).data, (error.response || {}).data.status))
+          dispatch({
+            type: AUTH_ERROR
+          })
+        }catch(e){
+          //console.log(e)
+        }
       })
   }
 
@@ -44,7 +46,7 @@ export const register= (body)=>dispatch =>{
     axios.post('/api/applicants/register',body,config)
     .then(res=>{
         dispatch({type:REGISTER_SUCCESS,
-            payload:res.data})    
+            payload:res.data.data})    
     })
     .catch(err=>{
         dispatch(returnErrors(err.response.data,err.response.status,'REGISTER_FAIL'))
