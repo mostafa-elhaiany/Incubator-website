@@ -12,7 +12,8 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap'
   import { connect } from 'react-redux'
-
+  import PropTypes from 'prop-types'
+  import {logout} from '../../actions/authActions'
 
 class AppNavbar extends React.Component {
   constructor(props) {
@@ -23,6 +24,11 @@ class AppNavbar extends React.Component {
       isOpen: false
     };
   }
+  
+  static propTypes={
+    auth: PropTypes.object.isRequired,
+    logout:PropTypes.func.isRequired
+}
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -42,7 +48,7 @@ class AppNavbar extends React.Component {
                       <a href="/profile/">My Profile</a>
                   </DropdownItem>
                   <DropdownItem>
-                    <a href="/logout/">logout</a>
+                    <a onClick={this.props.logout} href="/" >Logout</a>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
@@ -96,10 +102,11 @@ class AppNavbar extends React.Component {
 }
 const mapStateToProps = state =>({
   isAuthenticated:state.auth.isAuthenticated,
-  error:state.error
+  error:state.error,
+  auth:state.auth
 })
 
 export default connect(
   mapStateToProps,
-  { }
+  { logout}
 )(AppNavbar)
