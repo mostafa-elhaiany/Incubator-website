@@ -55,14 +55,14 @@ export const register= (body)=>dispatch =>{
 }
 
 //LOGIN USER
-export const applicantLogin= (body)=>dispatch =>{
+export const login= (body)=>dispatch =>{
     //headers
     const config = {
         headers: {
           'Content-type': 'application/json'
         }
       }
-    axios.post('/api/applicants/auth',body,config)
+    axios.post('/api/auth/user',body,config)
     .then(res=>{
         dispatch({type:LOGIN_SUCCESS,
             payload:res.data})    

@@ -22,10 +22,6 @@ exports.auth = async (req,res) =>{
       message: valid.error.details[0].message,
     })
   }
-
- 
-  
-  
   var curr= await applicant.findOne({email:body.email})
   if(curr)
     this.authHelper(curr,body,'Applicant')
@@ -34,44 +30,28 @@ exports.auth = async (req,res) =>{
      if(curr)
      this.authHelper(curr,body,'Member')
     else{
-        curr= await highBoard.findOne({email:body.email})
-        if(curr)
-        this.authHelper(curr,body,'Highboard')
-        else{
-            curr= await admin.findOne({email:body.email})
-            if(curr)
-            this.authHelper(curr,body,'Admin')
-            else{
-                return res.status(400).json({
-                    status:"error",
-                    msg:'user with that email does not exists'
-                  })
-                
-            }
-
+      curr= await highBoard.findOne({email:body.email})
+      if(curr)
+      this.authHelper(curr,body,'Highboard')
+      else{
+          curr= await admin.findOne({email:body.email})
+          if(curr)
+          this.authHelper(curr,body,'Admin')
+          else{
+              return res.status(400).json({
+                  status:"error",
+                  msg:'user with that email does not exists'
+                })        
         }
+     }
     }
-
   }
-
-}
-
-
-
-exports.user = async (req,res) =>{
-    Model.findById(req.user.id).select('-password')
-    .then(applicant=>{
-      return res.json({
-        status:'success',
-        data:applicant
-      })
-    })
 }
 
 exports.authHelper = async (user,body,type)=>{
-      bcrypt.compare(body.password, user.password)
-      .then(match=>{
-        if(!match) return res.status(400).json({
+  bcrypt.compare(body.password, user.password)
+  .then(match=>{
+    if(!match) return res.status(400).json({
           status:"error",
           msg:'wrong password'
         })
@@ -89,9 +69,17 @@ exports.authHelper = async (user,body,type)=>{
               type
             })
           }
-        )  
-
+          ) 
+})
+        
+exports.user = async (req,res) =>{
+    Model.findById(req.user.id).select('-password')
+    .then(applicant=>{
+      return res.json({
+        status:'success',
+        data:applicant
       })
-    
- 
+    })
+}
+        
 }
