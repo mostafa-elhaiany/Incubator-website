@@ -8,7 +8,7 @@ function auth(req,res,next) {
     //check token
     if(!token)
     {
-        res.status(401).json({
+       return res.status(401).json({
             status:'error',
             msg:'unautherized! Token doesnt exist'
         })

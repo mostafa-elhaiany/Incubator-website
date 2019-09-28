@@ -7,8 +7,10 @@ const auth = require('../../middleware/auth')
 //authenticate User
 router.post('/user',controller.auth)
 
+
 //private get User
-router.get('/user', auth,controller.user)
+router.get('/user', auth ,controller.user)
+
 
 
 module.exports = router

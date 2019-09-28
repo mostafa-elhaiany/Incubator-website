@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input,Alert } from 'reactstrap';
-import { applicantLogin } from '../actions/authActions';
+import { login } from '../actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -91,6 +91,6 @@ const mapStateToProps = state =>({
   
   export default connect(
     mapStateToProps,
-    { applicantLogin }
+    { login }
   )(Login)
   
