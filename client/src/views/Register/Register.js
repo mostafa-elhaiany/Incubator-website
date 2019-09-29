@@ -150,6 +150,12 @@ class Register extends React.Component {
     });
   };
 
+  handleButtonChange = index => {
+    this.setState({
+      index: index,
+    });
+  }
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({ cardAnimation: "" })
@@ -363,16 +369,17 @@ class Register extends React.Component {
                 <Card className={classes[this.state.cardAnimation]}>
                   <form className={classes.form} onSubmit={this.submit}>
                     <CardHeader color="primary" className={classes.cardHeader}>
-                      <h2>Register</h2>
+                      <h1 className={classes.title}>Register</h1>
+                      <br />
+                      <h3 className={classes.title}>And apply to Incubator</h3>
                       <div>
-                        <h5 className={classes.divider}>Progress {this.state.percentage}%</h5>
-
                         {
                           (this.state.percentage === 0 ?
                             <Progress />
                             :
                             <Progress color="success" value={this.state.percentage} />)
                         }
+                        <h6>PROGRESS {this.state.percentage}%</h6>
                       </div>
                     </CardHeader>
 
@@ -401,7 +408,16 @@ class Register extends React.Component {
 
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
-                      <Button type='submit' simple color="primary" size="lg">
+                      <Button color="rose" size="lg" onClick={() => this.handleButtonChange(this.state.index == 0 ? 1 : 0)}>
+                        {
+                          this.state.index == 0 ?
+                            "Just one more step"
+                            :
+                            "Back to General Info"
+                        }
+                        <i className={this.state.index == 0 ? "fas fa-arrow-right" : "fas fa-arrow-left"} />
+                      </Button>
+                      <Button type='submit' color="primary" size="lg">
                         Register
                       </Button>
                     </CardFooter>
