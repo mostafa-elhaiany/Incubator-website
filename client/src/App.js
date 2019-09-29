@@ -9,23 +9,26 @@ import { loadUser } from './actions/authActions'
 
 // pages
 import HomePage from './pages/HomePage'
-import Profile from './pages/Profile'
+import Profile from './pages/auth/Profile'
 import NotFound from './pages/NotFound'
 import AppNavbar from './components/generic/AppNavbar'
-import CommitteesPage from './pages/CommitteesPage'
-import Register from './pages/Register'
-import Login from './pages/Login'
+import CommitteesPage from './pages/Committee/CommitteesPage'
+import Register from './pages/auth/Register/Register'
+import Login from './pages/auth/Login/Login'
 import HeadAddSlots from './pages/HeadAddSlots'
 import About from './pages/About'
+import UsersList from './pages/Users/UsersList'
 import LandingPage from './views/LandingPage'
 
 // import './App.css'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends Component {
+  
   componentDidMount() {
     store.dispatch(loadUser())
   }
+
   render() {
     return (
       <Provider store={store}>
@@ -34,6 +37,7 @@ class App extends Component {
             {/* <AppNavbar/> */}
             <Switch>
               <Route exact path='/' component={HomePage} />
+              <Route exact path='/users/' component={UsersList} />
               <Route exact path='/committees' component={CommitteesPage} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />

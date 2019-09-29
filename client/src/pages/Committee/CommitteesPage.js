@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import {Container,ListGroup,ListGroupItem,Button} from 'reactstrap'
 //import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import axios from 'axios'
-import CommitteeCard from '../components/CommitteeCard'
+import CommitteeCard from './components/CommitteeCard'
 class CommitteesPage extends Component{
     state={
         loaded:false,

@@ -68,6 +68,7 @@ render () {
                  committee=>{
                    if(committee.type==='organizing')
                     return <p>{committee.name}</p>
+                   return <p></p>
                  }
                )}
               </div>
@@ -80,7 +81,8 @@ render () {
                {this.state.committees.map(
                  committee=>{
                    if(committee.type==='projects')
-                    return <p>{committee.name}</p>
+                      return <p>{committee.name}</p>
+                   return   <p></p>
                  }
                )}
               </div>

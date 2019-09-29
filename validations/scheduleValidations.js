@@ -8,8 +8,7 @@ module.exports = {
       interviewer: Joi.string().required(),
       interviewee: Joi.string(),
       committee: Joi.string().required(),
-      reserved: Joi.bool().required()
-    }
+      reserved: Joi.bool()    }
     return Joi.validate(req, createSchema)
   },
 
@@ -17,12 +16,12 @@ module.exports = {
 
   updateValidation: req => {
     const updateSchema = {
-        day: Joi.string().required(),
-        slot: Joi.string().required(),
-        interviewer: Joi.string().required(),
-        interviewee: Joi.string().required(),
-        committee: Joi.string().required(),
-        reserved: Joi.bool().required()
+        day: Joi.string(),
+        slot: Joi.string(),
+        interviewer: Joi.string(),
+        interviewee: Joi.string(),
+        committee: Joi.string(),
+        reserved: Joi.bool()
     }
     return Joi.validate(req, updateSchema)
   }

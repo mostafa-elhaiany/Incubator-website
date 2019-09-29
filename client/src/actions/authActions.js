@@ -15,26 +15,28 @@ import {
 export const loadUser = () => (dispatch, getState) => {
     // User loading
     dispatch({ type: USER_LOADING })
-  
     axios
       .get('/api/auth/user', tokenConfig(getState))
-      .then(res =>
+      .then(res =>{
         dispatch({
           type: USER_LOADED,
-          payload: res.data
-        })
+          payload:res.data
+        })}
       )
-      .catch(err => {
-        console.log(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
-        dispatch({
-          type: AUTH_ERROR
-        })
+      .catch(error => {
+        try{
+          dispatch(returnErrors((error.response || {}).data, (error.response || {}).data.status))
+          dispatch({
+            type: AUTH_ERROR
+          })
+        }catch(e){
+          //console.log(e)
+        }
       })
   }
 
 //REGISTER USER
-export const register= (body)=>dispatch =>{
+export const register= (body)=>  dispatch =>{
     //headers
     const config = {
         headers: {
@@ -43,8 +45,9 @@ export const register= (body)=>dispatch =>{
       }
     axios.post('/api/applicants/register',body,config)
     .then(res=>{
+        const data={...res.data.data, type:'applicant'}
         dispatch({type:REGISTER_SUCCESS,
-            payload:res.data})    
+            payload:data})    
     })
     .catch(err=>{
         dispatch(returnErrors(err.response.data,err.response.status,'REGISTER_FAIL'))
@@ -55,14 +58,14 @@ export const register= (body)=>dispatch =>{
 }
 
 //LOGIN USER
-export const applicantLogin= (body)=>dispatch =>{
+export const login= (body)=>dispatch =>{
     //headers
     const config = {
         headers: {
           'Content-type': 'application/json'
         }
       }
-    axios.post('/api/applicants/auth',body,config)
+    axios.post('/api/auth/user',body,config)
     .then(res=>{
         dispatch({type:LOGIN_SUCCESS,
             payload:res.data})    
@@ -77,6 +80,7 @@ export const applicantLogin= (body)=>dispatch =>{
 
 //LOGOUT
 export const logout = ()=>{
+  console.log('logging out')
   return {
     type:LOGOUT_SUCCESS
   }

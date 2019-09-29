@@ -24,7 +24,8 @@ const ScheduleSchema = new Schema({
   },
   reserved: {
       type: Boolean,
-      required:true
+      required:false,
+      default:false
   }
 })
 
