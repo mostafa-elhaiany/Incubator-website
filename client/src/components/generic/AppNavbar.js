@@ -86,6 +86,9 @@ class AppNavbar extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+            <NavItem>
+                <NavLink href="/users/">Users</NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink href="/committees/">Committees</NavLink>
               </NavItem>

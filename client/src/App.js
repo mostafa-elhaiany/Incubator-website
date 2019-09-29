@@ -5,15 +5,16 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import AppNavbar from './components/generic/AppNavbar'
-import CommitteesPage from './pages/CommitteesPage'
-import Register from './pages/Register'
-import Login from './pages/Login'
+import CommitteesPage from './pages/Committee/CommitteesPage'
+import Register from './pages/auth/Register/Register'
+import Login from './pages/auth/Login/Login'
 import HeadAddSlots from './pages/HeadAddSlots'
 import About from './pages/About'
 import {loadUser} from './actions/authActions'
 import {Provider} from 'react-redux'
 import store from './store'
 import Profile from './pages/Profile'
+import UsersList from './pages/Users/UsersList'
 class App extends Component {
   componentDidMount(){
     store.dispatch(loadUser())
@@ -27,6 +28,7 @@ class App extends Component {
           <AppNavbar/>
             <Switch>
               <Route exact path='/' component={HomePage} />
+              <Route exact path='/users/' component={UsersList} />
               <Route exact path='/committees' component={CommitteesPage} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />

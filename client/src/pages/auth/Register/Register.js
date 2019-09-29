@@ -13,8 +13,8 @@ import Axios from 'axios'
 import SwipeableViews from 'react-swipeable-views'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { register } from '../actions/authActions';
-import { clearErrors } from '../actions/errorActions';
+import { register } from '../../../actions/authActions';
+import { clearErrors } from '../../../actions/errorActions';
 
 //import { bindKeyboard } from 'react-swipeable-views-utils';
 

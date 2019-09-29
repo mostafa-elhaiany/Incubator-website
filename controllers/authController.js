@@ -88,32 +88,37 @@ exports.authHelper = async (res,user,body,type)=>{
 
 exports.user = async (req,res) =>{
 var curr= await applicant.findById(req.user.id).select('-password')
-  if(curr)
+  if(curr){
+
     return res.json({
       status:'success',
-      data:curr
-      })
+      data:curr,
+      type:"applicant"
+      })}
     else{
       curr= await member.findById(req.user.id).select('-password')
-      if(curr)
+      if(curr){
         return res.json({
-        status:'success',
-        data:curr
-        })
+          status:'success',
+          data:curr,
+          type:member
+          })}
         else{
           curr= await highBoard.findById(req.user.id).select('-password')
-        if(curr)
+        if(curr){
           return res.json({
-          status:'success',
-          data:curr
-          })
+            status:'success',
+            data:curr,
+            type:'highboard'
+            })}
           else{
            curr= await admin.findById(req.user.id).select('-password')
-          if(curr)
+          if(curr){
             return res.json({
-            status:'success',
-            data:curr
-            })
+              status:'success',
+              data:curr,
+              type:'admin'
+              })}
           else{
               return res.status(400).json({
                   status:"error",
@@ -124,4 +129,61 @@ var curr= await applicant.findById(req.user.id).select('-password')
       }
     }
   }
+}
+
+exports.getType = async (req,res) =>{
+  const id = req.params.id
+  try{
+  var curr= await applicant.findById(id)
+  if(curr)
+    return res.json({
+      status:'success',
+      data: 'applicant'
+    })
+
+  else{
+
+     curr= await member.findById(id)
+
+     if(curr)
+       return res.json({
+        status:'success',
+        data: 'member'
+      })
+
+    else{
+
+      curr= await highBoard.findById(id)
+
+      if(curr)
+      return res.json({
+        status:'success',
+        data: 'highboard'
+      })
+
+      else{
+          curr= await admin.findById(id)
+
+          if(curr)
+          return res.json({
+            status:'success',
+            data: 'admin'
+          })
+          else{
+              return res.status(400).json({
+                  status:"error",
+                  msg:'user with that id does not exists'
+                })        
+        }
+     }
+    }
+  }
+}catch(e)
+    {
+      return res.status(400).json({
+        status:'error',
+        error:e,
+        msg:'something went wrong, either an invalid id or server error. check the error above for more details'
+      })
+    }
 }
