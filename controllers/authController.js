@@ -27,27 +27,27 @@ exports.auth = async (req,res) =>{
 
   var curr= await applicant.findOne({email:body.email})
   if(curr)
-    return this.authHelper(res,curr,body,'Applicant')
+    return this.authHelper(res,curr,body,'applicant')
 
   else{
 
      curr= await member.findOne({email:body.email})
 
      if(curr)
-       return this.authHelper(res,curr,body,'Member')
+       return this.authHelper(res,curr,body,'member')
 
     else{
 
       curr= await highBoard.findOne({email:body.email})
 
       if(curr)
-        return this.authHelper(res,curr,body,'Highboard')
+        return this.authHelper(res,curr,body,'highboard')
 
       else{
           curr= await admin.findOne({email:body.email})
 
           if(curr)
-            return this.authHelper(res,curr,body,'Admin')
+            return this.authHelper(res,curr,body,'admin')
 
           else{
               return res.status(400).json({

@@ -34,7 +34,7 @@ exports.create = async (req, res) => {
     })
   }
   const newAdmin = new Model(body) 
-  bcrypt.genSalt(15, (err,salt)=>{
+  bcrypt.genSalt(10, (err,salt)=>{
     if(err) throw err
     bcrypt.hash(newAdmin.password,salt,(err,hash)=>{
       if(err) throw err

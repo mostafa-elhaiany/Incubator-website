@@ -67,7 +67,7 @@ exports.register = async (req,res) =>{
               (err,token)=>{
                 if(err) throw err
                
-                res.json({
+                return res.json({
                   status:'success',
                   token,
                   data:applicant
