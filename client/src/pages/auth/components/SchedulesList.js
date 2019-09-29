@@ -7,6 +7,7 @@ import {
     Label,
     Input,
     Table} from 'reactstrap'
+import { Button } from '@material-ui/core';
 class SchedulesList extends Component {
   static propTypes = {
     getSchedules: PropTypes.func.isRequired,
@@ -31,7 +32,8 @@ class SchedulesList extends Component {
           <tr>
             <th>Day</th>
             <th>Slot</th>
-            <th>Reserve</th>
+            <th>Reservation</th>
+            <th>interviewer</th>
           </tr>
         </thead>
         <tbody>
@@ -41,25 +43,17 @@ class SchedulesList extends Component {
             <td>{schedule.day}</td>
             <td>{schedule.slot}</td>
             <td>{
-              !schedule.reserved?
-               (<div>
-                  <FormGroup check>
-                  <Label check>
-                  <Input type="radio" name="reserve" onInput={(e)=>this.Input(e,schedule)} />{' '}
-                  Choose {schedule.day} {schedule.slot}
-                  </Label>
-                </FormGroup>
-                  <br/>
-                  </div>)
+              schedule.reserved?
+              (
+               <p>reserved by {schedule.interviewee}</p>
+              )
               : 
-              (<div><FormGroup check disabled>
-                    <Label check>
-                      <Input type="radio" name="radio1" disabled />{' '}
-                      {schedule.day} {schedule.slot} reserved by {schedule.interviewee}
-                    </Label>
-                  </FormGroup>
-              </div>)
+              (
+                <p>free</p>
+              )
             }</td>
+             <td>{schedule.interviewer}</td>
+             <td><Button className="btn btn-danger" onClick={()=>this.onDeleteClick(schedule._id)}>Delete</Button></td>
            </tr>
           )
           return x

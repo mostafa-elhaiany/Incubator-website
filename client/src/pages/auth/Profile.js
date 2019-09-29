@@ -13,10 +13,7 @@ class Profile extends Component {
         user:PropTypes.object.isRequired
       }
 
-     G= ()=>{
-        if(this.props.isAuthenticated)
-          console.log(this.props.user, this.props.type)
-    }
+  
 
     render () {
     return ( 
@@ -24,7 +21,6 @@ class Profile extends Component {
         this.props.isAuthenticated?
         <div>
             <h1>welcome {this.props.user.fullName}</h1>
-            <Button onClick={this.G} >testing</Button>
             <Container>
             <ScheduleModal />
             <SchedulesList />

@@ -68,7 +68,7 @@ class ScheduleModal extends Component {
             style={{ marginBottom: '2rem' }}
             onClick={this.toggle}
           >
-            Add Schedule
+            Add Interview slot
           </Button>
         ) : (
           <h4 className='mb-3 ml-4'>Please log in to manage Schedules</h4>
@@ -84,6 +84,7 @@ class ScheduleModal extends Component {
                     <Label for="exampleSelectDay">Day</Label>
                     <Input type="select" name="day"  onChange={this.onChange}>
                         <option>Select Day</option>
+                        <option>Saturday</option>
                         <option>Sunday</option>
                         <option>Monday</option>
                         <option>Tuesday</option>
@@ -101,11 +102,14 @@ class ScheduleModal extends Component {
                 <option>Select Slot</option>
                 <option>8:30 -> 9:00</option>
                 <option>9:15 -> 9:45</option>
+                <option>9:45 -> 10:00</option>
                 <option>10:00 -> 10:30</option>
                 <option>10:45 -> 11:15</option>
                 <option>11:30 -> 12:00</option>
                 <option>12:15 -> 12:45</option>
                 <option>1:00 -> 1:30</option>
+                <option>1:30 -> 1:45</option>
+                <option>1:15 -> 1:45</option>
                 <option>1:45 -> 2:15</option>
                 <option>2:30 -> 3:00</option>
                 <option>3:15 -> 3:45</option>
@@ -117,12 +121,16 @@ class ScheduleModal extends Component {
               <FormGroup>
                     <Label >Committee</Label>
                     <Input type="select" name="committee"  onChange={this.onChange}>
+                      <option>Select Committee</option>
                         <option>Affective Computing</option>
                         <option>Smart problem solvers</option>
                         <option>BioInformatics</option>
+                        <option>Lab on chip</option>
                         <option>Fundraising</option>
                         <option>Events</option>
                         <option>Marketing</option>
+                        <option>for Projects</option>
+                        <option>for Organizing</option>
                     </Input>
                 </FormGroup>
               <FormGroup>
@@ -130,7 +138,7 @@ class ScheduleModal extends Component {
                 <Input
                   type='text'
                   name='interviewer'
-                  placeholder='Add shopping item'
+                  placeholder='Add interview slot'
                   onChange={this.onChange}
                 />
               </FormGroup>
