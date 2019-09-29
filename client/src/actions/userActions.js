@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USERS, DELETE_USER, USERS_LOADING } from './types';
+import { GET_USER,GET_USERS, DELETE_USER, USERS_LOADING } from './types';
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 
@@ -74,6 +74,40 @@ export const deleteUser = id => (dispatch, getState) => {
           dispatch(returnErrors('type error','error'))
         }
 }
+
+
+export const getUser = id => (dispatch, getState) => {
+  const type = getType(id)
+  var route=''
+  if(type!=='error'){
+    switch(type){
+        case 'applicant':  route=`/api/applicants/${id}`
+        break
+        case 'member':  route=`/api/members/${id}`
+        break
+        case 'highboard':  route=`/api/highboards/${id}`
+        break;
+        case 'admin':  route=`/api/admins/${id}`
+        break;
+        default:
+    }
+
+    axios
+      .get(route, tokenConfig(getState))
+      .then(res =>
+        dispatch({
+            type: GET_USER,
+            payload: res.data.data
+        })
+        )
+        .catch(err =>
+            dispatch(returnErrors(err.response.data, err.response.status))
+            );
+        }else {
+          dispatch(returnErrors('type error','error'))
+        }
+}
+
 
 export const setUsersLoading = () => {
   return {

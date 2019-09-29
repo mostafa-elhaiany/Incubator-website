@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
-import { Label,InputGroup, InputGroupAddon,Container, ListGroup, ListGroupItem, Button,Input  } from 'reactstrap';
+import { Spinner,Label,InputGroup, InputGroupAddon,Container, ListGroup, ListGroupItem, Button,Input  } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUsers,deleteUser } from '../actions/userActions';
+import { getUsers,deleteUser,getUser } from '../actions/userActions';
 
 class UsersList extends Component {
     state={
         filtered:[],
-        typed:false
+        typed:false,
+        userSelected:false,
+        userId:"",
+        user:{}
     }
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     getUsers: PropTypes.func.isRequired,
-    delete:PropTypes.func.isRequired
+    delete:PropTypes.func.isRequired,
+    getUser:PropTypes.func.isRequired
   };
 
 async componentDidMount() {
     await this.props.getUsers()
 }
 
-  onDeleteClick = id => {
-      console.log('delete ',id)
+onDeleteClick = async id => {
+    await this.props.getUser(id)
+      this.setState({
+          userSelected:true,
+          userId:id
+      })
   };
   search = (e)=>{
       this.setState({
@@ -40,7 +48,36 @@ async componentDidMount() {
         }
       
     return (
-        <div className='container'>
+        this.state.userSelected?
+        (
+            <div>
+                you selected user with id {this.state.userId}
+
+                <Button
+                      className='remove-btn'
+                      color='danger'
+                      size='sm'
+                      onClick={()=>{
+                          this.setState({userSelected:false,userId:""})
+                      }}
+                      >
+                      &times;
+                      GO BACK
+                    </Button>
+            </div>
+        )
+        :
+        (
+            this.props.usersLoading? (
+                <div className="container">
+                        loading please wait
+                        <Spinner color="primary" />
+                </div>
+            )
+            :
+            (
+
+                <div className='container'>
             <br/><br/>
             <InputGroup>
             <Label for="exampleEmail">Search By Name</Label>
@@ -63,8 +100,10 @@ async componentDidMount() {
                       onClick={this.onDeleteClick.bind(this, _id)}
                       >
                       &times;
+                      show
                     </Button>
-                  ) : null}
+                    
+                    ) : null}
                   {fullName} {title} {committee}
                 </ListGroupItem>
               </CSSTransition>
@@ -73,16 +112,20 @@ async componentDidMount() {
         </ListGroup>
       </Container>
     </div>
+      )
     )
-  }
+    )
+}
 }
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    users:state.users
+    users:state.users,
+    usersLoading:state.users.loading,
+    
 });
 
 export default connect(
   mapStateToProps,
-  { getUsers,deleteUser }
+  { getUsers,deleteUser,getUser }
 )(UsersList);

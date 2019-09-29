@@ -138,7 +138,7 @@ exports.getType = async (req,res) =>{
 
   else{
 
-     curr= await member.findOne({email:body.email})
+     curr= await member.findById(id)
 
      if(curr)
        return res.json({
@@ -148,7 +148,7 @@ exports.getType = async (req,res) =>{
 
     else{
 
-      curr= await highBoard.findOne({email:body.email})
+      curr= await highBoard.findById(id)
 
       if(curr)
       return res.json({
@@ -157,7 +157,7 @@ exports.getType = async (req,res) =>{
       })
 
       else{
-          curr= await admin.findOne({email:body.email})
+          curr= await admin.findById(id)
 
           if(curr)
           return res.json({
