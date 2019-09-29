@@ -61,7 +61,7 @@ exports.register = async (req,res) =>{
         .then(applicant=>{
 
             jwt.sign(
-              {id:applicant._id},
+              {id:applicant._id,type:'applicant'},
               process.env.jwtSecret,
               {expiresIn:3600},
               (err,token)=>{

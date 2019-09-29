@@ -4,11 +4,14 @@ const validator = require('../validations/highBoardValidations')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const main = require('./main')
+const helperController= require('./helperController')
 
 exports.default = async (req, res) => {
   await main.default(res, Model)
 }
-exports.create = async (req, res) => {const body = req.body
+
+exports.create = async (req, res) => {
+  const body = req.body
   if(!body)
   {
     return res.status(400).json({
@@ -23,47 +26,38 @@ exports.create = async (req, res) => {const body = req.body
       message: valid.error.details[0].message,
     })
   }
-
-  Model.findOne({email:body.email})
-  .then(applicant=>{
-      if(applicant)
-      {
-        return res.status(400).json({
-          status:"error",
-          msg:'a user with that email already exists'
-        })
-      }
-
-    const newApplicant = new Model(req.body) 
-    bcrypt.genSalt(11, (err,salt)=>{
+  const flag= await helperController.checkEmail(body.email)
+  if(!flag){
+    return res.status(400).json({
+      status:"error",
+      msg:'a user with that email already exists'
+    })
+  }
+  const newHighBoard = new Model(body) 
+  bcrypt.genSalt(15, (err,salt)=>{
+    if(err) throw err
+    bcrypt.hash(newHighBoard.password,salt,(err,hash)=>{
       if(err) throw err
-      bcrypt.hash(newApplicant.password,salt,(err,hash)=>{
-        if(err) throw err
-        newApplicant.password=hash
-        newApplicant.save()
-        .then(applicant=>{
-
-            jwt.sign(
-              {id:applicant._id},
-              process.env.jwtSecret,
-              {expiresIn:3600},
-              (err,token)=>{
-                if(err) throw err
-               
-                res.json({
-                  status:'success',
-                  token,
-                  data:applicant
-                })
-              }
-            )           
-        })
+      newHighBoard.password=hash
+      newHighBoard.save()
+      .then(highboard=>{
+          jwt.sign(
+            {id:highboard._id,type:'highboard'},
+            process.env.jwtSecret,
+            {expiresIn:3600},
+            (err,token)=>{
+              if(err) throw err
+             
+              return res.json({
+                status:'success',
+                token,
+                data:highboard
+              })
+            }
+          )           
       })
     })
-
   })
-  .catch(err=>console.log(err))
-
 }
 
 exports.read = async (req, res) => {
