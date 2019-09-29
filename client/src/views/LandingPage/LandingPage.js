@@ -14,7 +14,7 @@ import Parallax from "components/theme/Parallax/Parallax.js";
 //redux 
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {logout} from 'actions/authActions'
+import { logout } from 'actions/authActions'
 
 import styles from "assets/jss/views/LandingPage/landingPage";
 
@@ -30,8 +30,7 @@ class LandingPage extends React.Component {
   render() {
 
     const dashboardRoutes = [];
-    const { classes } = this.props;
-    const { ...rest } = this.props;
+    const { classes, ...rest } = this.props;
 
     return (
       <div>
@@ -40,11 +39,11 @@ class LandingPage extends React.Component {
           routes={dashboardRoutes}
           brand="Incubator"
           rightLinks={
-          <HeaderLinks
-            isAuthenticated={this.props.isAuthenticated}
-            logout={this.props.logout}
-          />
-        }
+            <HeaderLinks
+              isAuthenticated={this.props.isAuthenticated}
+              logout={this.props.logout}
+            />
+          }
           fixed
           changeColorOnScroll={{
             height: 400,
@@ -103,5 +102,5 @@ const mapStateToProps = state => ({
 })
 
 export default withStyles(styles)(
-  connect(mapStateToProps)(LandingPage)
+  connect(mapStateToProps, { logout })(LandingPage)
 )
