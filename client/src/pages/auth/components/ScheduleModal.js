@@ -99,16 +99,19 @@ class ScheduleModal extends Component {
                   onChange={this.onChange}
                 >
                 <option>Select Slot</option>
-                <option>First</option>
-                <option>gap first and second</option>
-                <option>Second</option>
-                <option>gap second and third</option>
-                <option>Third</option>
-                <option>gap third and fourth</option>
-                <option>fourth</option>
-                <option>gap fourth and fifth</option>
-                <option>fifth</option>
-                <option>after hours</option>
+                <option>8:30 -> 9:00</option>
+                <option>9:15 -> 9:45</option>
+                <option>10:00 -> 10:30</option>
+                <option>10:45 -> 11:15</option>
+                <option>11:30 -> 12:00</option>
+                <option>12:15 -> 12:45</option>
+                <option>1:00 -> 1:30</option>
+                <option>1:45 -> 2:15</option>
+                <option>2:30 -> 3:00</option>
+                <option>3:15 -> 3:45</option>
+                <option>4:00 -> 4:30</option>
+                <option>4:45 -> 5:15</option>
+                <option>5:45 -> 6:15</option>
                 </Input>
               </FormGroup>
               <FormGroup>

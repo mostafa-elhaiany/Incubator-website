@@ -40,6 +40,12 @@ const ApplicantSchema = new Schema({
   GUC_ID: {
     type: String,
     required:true
+  },
+  rejected:{
+    type:Boolean
+  },
+  feedBack:{
+    type:String
   }
 })
 

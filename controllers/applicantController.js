@@ -9,7 +9,53 @@ exports.default = async (req, res) => {
   await main.default(res, Model)
 }
 exports.create = async (req, res) => {
-  await main.create(req, res, validator, Model)
+  const body = req.body
+  if(!body)
+  {
+    return res.status(400).json({
+      status:'error',
+      msg:"body can't be empty"
+    })
+  }
+  const valid = validator.createValidation(body)
+  if (valid.error) {
+    return res.status(400).json({
+      status: 'error',
+      message: valid.error.details[0].message,
+    })
+  }
+  const flag= await helperController.checkEmail(body.email)
+  if(!flag){
+    return res.status(400).json({
+      status:"error",
+      msg:'a user with that email already exists'
+    })
+  }
+  const newApplicant = new Model(body) 
+  bcrypt.genSalt(10, (err,salt)=>{
+    if(err) throw err
+    bcrypt.hash(newApplicant.password,salt,(err,hash)=>{
+      if(err) throw err
+      newApplicant.password=hash
+      newApplicant.save()
+      .then(applicant=>{
+          jwt.sign(
+            {id:applicant._id,type:'applicant'},
+            process.env.jwtSecret,
+            {expiresIn:3600},
+            (err,token)=>{
+              if(err) throw err
+             
+              return res.json({
+                status:'success',
+                token,
+                data:applicant
+              })
+            }
+          )           
+      })
+    })
+  })
 }
 
 exports.read = async (req, res) => {
@@ -154,3 +200,38 @@ exports.user = async (req,res) =>{
     })
 }
 
+exports.changePassword = async (req,res)=>{
+  const id = req.params.id
+  const valid = authValidator.ChangePasswordValidation(req.body)
+  if (valid.error) {
+    return res.status(400).json({
+      status: 'Error',
+      message: valid.error.details[0].message
+    })
+  }
+  const user = Model.findById(id)
+  bcrypt.genSalt(10, (err,salt)=>{
+    if(err) throw err
+    bcrypt.hash(user.password,salt,(err,hash)=>{
+      if(err) throw err
+      user.password=hash
+      user.save()
+      .then(user=>{
+          jwt.sign(
+            {id:user._id,type:'applicant'},
+            process.env.jwtSecret,
+            {expiresIn:3600},
+            (err,token)=>{
+              if(err) throw err
+             
+              return res.json({
+                status:'success',
+                token,
+                data:user
+              })
+            }
+          )           
+      })
+    })
+  })
+}
