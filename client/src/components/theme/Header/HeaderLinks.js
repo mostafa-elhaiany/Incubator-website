@@ -60,7 +60,7 @@ function HeaderLinks(props) {
         <Button
           href="/committees/"
           color="transparent"
-          target="_blank"
+          // target="_blank"
           className={classes.navLink}
         >
           <Group className={classes.icons} /> Committees
@@ -71,7 +71,7 @@ function HeaderLinks(props) {
         <Button
           href="/about/"
           color="transparent"
-          target="_blank"
+          // target="_blank"
           className={classes.navLink}
         >
           <Info className={classes.icons} /> About
@@ -119,7 +119,7 @@ function HeaderLinks(props) {
           <Button
             color="transparent"
             href="https://www.facebook.com/pg/IncubatorGUC"
-            target="_blank"
+            // target="_blank"
             className={classes.navLink}
           >
             <i className={classes.socialIcons + " fab fa-facebook"} />
@@ -137,7 +137,7 @@ function HeaderLinks(props) {
           <Button
             color="transparent"
             href="https://www.instagram.com/incubator_guc/"
-            target="_blank"
+            // target="_blank"
             className={classes.navLink}
           >
             <i className={classes.socialIcons + " fab fa-instagram"} />
