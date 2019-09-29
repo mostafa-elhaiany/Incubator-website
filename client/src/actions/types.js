@@ -1,3 +1,7 @@
+export const GET_SCHEDULES = 'GET_SCHEDULES'
+export const ADD_SCHEDULE = 'ADD_SCHEDULE'
+export const DELETE_SCHEDULE = 'DELETE_SCHEDULE'
+export const SCHEDULE_LOADING = "SCHEDULE_LOADING"
 export const GET_USERS = 'GET_USERS'
 export const GET_USER = 'GET_USER'
 export const DELETE_USER = 'DELETE_USER'
