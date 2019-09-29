@@ -125,3 +125,60 @@ var curr= await applicant.findById(req.user.id).select('-password')
     }
   }
 }
+
+exports.getType = async (req,res) =>{
+  const id = req.params.id
+  try{
+  var curr= await applicant.findById(id)
+  if(curr)
+    return res.json({
+      status:'success',
+      data: 'applicant'
+    })
+
+  else{
+
+     curr= await member.findOne({email:body.email})
+
+     if(curr)
+       return res.json({
+        status:'success',
+        data: 'member'
+      })
+
+    else{
+
+      curr= await highBoard.findOne({email:body.email})
+
+      if(curr)
+      return res.json({
+        status:'success',
+        data: 'highboard'
+      })
+
+      else{
+          curr= await admin.findOne({email:body.email})
+
+          if(curr)
+          return res.json({
+            status:'success',
+            data: 'admin'
+          })
+          else{
+              return res.status(400).json({
+                  status:"error",
+                  msg:'user with that id does not exists'
+                })        
+        }
+     }
+    }
+  }
+}catch(e)
+    {
+      return res.status(400).json({
+        status:'error',
+        error:e,
+        msg:'something went wrong, either an invalid id or server error. check the error above for more details'
+      })
+    }
+}

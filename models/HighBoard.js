@@ -18,6 +18,9 @@ const HighBoardSchema = new Schema({
   title:{
       type: String,
       required:true
+  },
+  committee:{
+    type:String
   }
 })
 

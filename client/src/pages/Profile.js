@@ -15,10 +15,7 @@ class Profile extends Component {
         
         this.props.isAuthenticated?
         <div>
-          {this.props.user.fullName?
             <h1>welcome {this.props.user.fullName}</h1>
-          :
-          <h1>hi you</h1>}
         </div>
         :
         <Alert color="danger">Please login first to access this page</Alert>

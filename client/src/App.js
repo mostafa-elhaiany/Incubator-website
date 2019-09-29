@@ -14,6 +14,7 @@ import {loadUser} from './actions/authActions'
 import {Provider} from 'react-redux'
 import store from './store'
 import Profile from './pages/Profile'
+import UsersList from './pages/UsersList'
 class App extends Component {
   componentDidMount(){
     store.dispatch(loadUser())
@@ -27,6 +28,7 @@ class App extends Component {
           <AppNavbar/>
             <Switch>
               <Route exact path='/' component={HomePage} />
+              <Route exact path='/users/' component={UsersList} />
               <Route exact path='/committees' component={CommitteesPage} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />

@@ -21,6 +21,8 @@ const passwordRegx = /(?=.*[!@#$%^&*_])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
 //   }
 // })
 
+
+
 // send reset password mail
 exports.forgetPassword = async (req, res) => {
   try {
