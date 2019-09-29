@@ -3,35 +3,31 @@ import { Spinner,Label,InputGroup, InputGroupAddon,Container, ListGroup, ListGro
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUsers,deleteUser,getUser } from '../actions/userActions';
-
+import { getUsers,getUser } from '../../actions/userActions';
+import UserProfile from './components/UsersProfile'
 class UsersList extends Component {
     state={
         filtered:[],
         typed:false,
-        userSelected:false,
-        userId:"",
-        user:{}
+        userSelected:false
     }
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     getUsers: PropTypes.func.isRequired,
-    delete:PropTypes.func.isRequired,
-    getUser:PropTypes.func.isRequired
+    getUser:PropTypes.func.isRequired,
+    user:PropTypes.object
   };
 
 async componentDidMount() {
     await this.props.getUsers()
 }
-
-onDeleteClick = async id => {
-    await this.props.getUser(id)
+choose = async id => {
+    await this.props.getUser(id) 
       this.setState({
-          userSelected:true,
-          userId:id
+          userSelected:true
       })
-  };
+  }
   search = (e)=>{
       this.setState({
           filtered:this.props.users.users.filter(user =>{
@@ -40,6 +36,11 @@ onDeleteClick = async id => {
       })
       this.setState({typed:true})
   }
+empty =()=>{
+  this.setState({
+    userSelected:false,
+  })
+}
 
   render() {
       var {users} = this.props.users
@@ -51,19 +52,7 @@ onDeleteClick = async id => {
         this.state.userSelected?
         (
             <div>
-                you selected user with id {this.state.userId}
-
-                <Button
-                      className='remove-btn'
-                      color='danger'
-                      size='sm'
-                      onClick={()=>{
-                          this.setState({userSelected:false,userId:""})
-                      }}
-                      >
-                      &times;
-                      GO BACK
-                    </Button>
+               <UserProfile isAuthenticated={this.props.isAuthenticated} user={this.props.user} goBack={this.empty} />
             </div>
         )
         :
@@ -97,7 +86,7 @@ onDeleteClick = async id => {
                       className='remove-btn'
                       color='danger'
                       size='sm'
-                      onClick={this.onDeleteClick.bind(this, _id)}
+                      onClick={this.choose.bind(this, _id)}
                       >
                       &times;
                       show
@@ -122,10 +111,11 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     users:state.users,
     usersLoading:state.users.loading,
+    user:state.users.user
     
 });
 
 export default connect(
   mapStateToProps,
-  { getUsers,deleteUser,getUser }
+  { getUsers,getUser }
 )(UsersList);

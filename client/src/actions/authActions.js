@@ -20,7 +20,7 @@ export const loadUser = () => (dispatch, getState) => {
       .then(res =>{
         dispatch({
           type: USER_LOADED,
-          payload: res.data.data
+          payload:res.data
         })}
       )
       .catch(error => {
@@ -36,7 +36,7 @@ export const loadUser = () => (dispatch, getState) => {
   }
 
 //REGISTER USER
-export const register= (body)=>dispatch =>{
+export const register= (body)=>  dispatch =>{
     //headers
     const config = {
         headers: {
@@ -45,8 +45,9 @@ export const register= (body)=>dispatch =>{
       }
     axios.post('/api/applicants/register',body,config)
     .then(res=>{
+        const data={...res.data.data, type:'applicant'}
         dispatch({type:REGISTER_SUCCESS,
-            payload:res.data.data})    
+            payload:data})    
     })
     .catch(err=>{
         dispatch(returnErrors(err.response.data,err.response.status,'REGISTER_FAIL'))
@@ -79,6 +80,7 @@ export const login= (body)=>dispatch =>{
 
 //LOGOUT
 export const logout = ()=>{
+  console.log('logging out')
   return {
     type:LOGOUT_SUCCESS
   }

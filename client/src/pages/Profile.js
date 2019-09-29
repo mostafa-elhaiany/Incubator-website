@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import {Alert} from 'reactstrap'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import {Alert,Button} from 'reactstrap'
 
 class Profile extends Component {
-    static propTypes = {
+
+  static propTypes = {
         isAuthenticated:PropTypes.bool,
         error:PropTypes.object.isRequired,
         user:PropTypes.object.isRequired
       }
+
+     G= ()=>{
+        if(this.props.isAuthenticated)
+          console.log(this.props.user, this.props.type)
+    }
 
     render () {
     return ( 
@@ -16,6 +22,7 @@ class Profile extends Component {
         this.props.isAuthenticated?
         <div>
             <h1>welcome {this.props.user.fullName}</h1>
+            <Button onClick={this.G} >testing</Button>
         </div>
         :
         <Alert color="danger">Please login first to access this page</Alert>
@@ -26,7 +33,8 @@ class Profile extends Component {
 const mapStateToProps = state =>({
     isAuthenticated:state.auth.isAuthenticated,
     error:state.error,
-    user:state.auth.user
+    user:state.auth.user,
+    type:state.auth.type
   })
   
   

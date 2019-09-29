@@ -88,32 +88,37 @@ exports.authHelper = async (res,user,body,type)=>{
 
 exports.user = async (req,res) =>{
 var curr= await applicant.findById(req.user.id).select('-password')
-  if(curr)
+  if(curr){
+
     return res.json({
       status:'success',
-      data:curr
-      })
+      data:curr,
+      type:"applicant"
+      })}
     else{
       curr= await member.findById(req.user.id).select('-password')
-      if(curr)
+      if(curr){
         return res.json({
-        status:'success',
-        data:curr
-        })
+          status:'success',
+          data:curr,
+          type:member
+          })}
         else{
           curr= await highBoard.findById(req.user.id).select('-password')
-        if(curr)
+        if(curr){
           return res.json({
-          status:'success',
-          data:curr
-          })
+            status:'success',
+            data:curr,
+            type:'highboard'
+            })}
           else{
            curr= await admin.findById(req.user.id).select('-password')
-          if(curr)
+          if(curr){
             return res.json({
-            status:'success',
-            data:curr
-            })
+              status:'success',
+              data:curr,
+              type:'admin'
+              })}
           else{
               return res.status(400).json({
                   status:"error",

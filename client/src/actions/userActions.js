@@ -3,18 +3,6 @@ import { GET_USER,GET_USERS, DELETE_USER, USERS_LOADING } from './types';
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 
-export const getType = (id)=>{
-    axios.get(`/api/auth/userType/${id}`)
-    .then(res=>{
-        if(res.data.error){
-            return 'error'
-        }
-        return res.data.data
-    }
-        )
-}
-
-
 export const getUsers = () => dispatch => {
   dispatch(setUsersLoading());
   var allUsers=[]
@@ -42,12 +30,21 @@ export const getUsers = () => dispatch => {
 };
 
 
-export const deleteUser = id => (dispatch, getState) => {
+export const deleteUser = id => async (dispatch, getState) => {
   
-  const type = getType(id)
-  var route=''
-  if(type!=='error'){
-    switch(type){
+  var type=''
+  await axios.get(`/api/auth/userType/${id}`)
+    .then(res=>{
+        if(res.data.error){
+            type= 'error'
+        }
+        
+        type= res.data.data
+    }
+    )
+    var route=''
+    if(type!=='error'){
+      switch(type){
         case 'applicant':  route=`/api/applicants/${id}`
         break
         case 'member':  route=`/api/members/${id}`
@@ -57,27 +54,36 @@ export const deleteUser = id => (dispatch, getState) => {
         case 'admin':  route=`/api/admins/${id}`
         break;
         default:
-    }
-
-    axios
-      .delete(route, tokenConfig(getState))
-      .then(res =>
-        dispatch({
+        }
+        
+        axios
+        .delete(route, tokenConfig(getState))
+        .then(res =>
+          dispatch({
             type: DELETE_USER,
             payload: id
-        })
-        )
-        .catch(err =>
+          })
+          )
+          .catch(err =>
             dispatch(returnErrors(err.response.data, err.response.status))
             );
-        }else {
-          dispatch(returnErrors('type error','error'))
+          }else {
+            dispatch(returnErrors('type error','error'))
+          }
         }
-}
+        
 
-
-export const getUser = id => (dispatch, getState) => {
-  const type = getType(id)
+export const getUser =   id => async (dispatch, getState) => {
+  var type=''
+  await axios.get(`/api/auth/userType/${id}`)
+    .then(res=>{
+        if(res.data.error){
+            type= 'error'
+        }
+        
+        type= res.data.data
+    }
+    )
   var route=''
   if(type!=='error'){
     switch(type){
@@ -91,14 +97,14 @@ export const getUser = id => (dispatch, getState) => {
         break;
         default:
     }
-
     axios
       .get(route, tokenConfig(getState))
-      .then(res =>
+      .then(res =>{
+        const data={...res.data.data,type}
         dispatch({
             type: GET_USER,
-            payload: res.data.data
-        })
+            payload: data
+        })}
         )
         .catch(err =>
             dispatch(returnErrors(err.response.data, err.response.status))

@@ -1,11 +1,13 @@
 import {
     GET_USERS,
+    GET_USER,
     DELETE_USER,
     USERS_LOADING
   } from '../actions/types';
   
   const initialState = {
     users: [],
+    user:{},
     loading: false
   };
   
@@ -15,7 +17,8 @@ import {
         return {
           ...state,
           users: action.payload,
-          loading: false
+          loading: false,
+          user:{}
         };
       case DELETE_USER:
         return {
@@ -27,6 +30,12 @@ import {
           ...state,
           loading: true
         };
+        case GET_USER:
+            return {
+              ...state,
+              user:action.payload,
+              loading: false
+            };
       default:
         return state;
     }
