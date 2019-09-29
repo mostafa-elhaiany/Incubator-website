@@ -1,4 +1,4 @@
-import { container } from "../../material-kit-react.js";
+import { container, title } from "../../material-kit-react.js";
 
 const signupPageStyle = {
   container: {
@@ -8,6 +8,15 @@ const signupPageStyle = {
     paddingTop: "20vh",
     color: "#FFFFFF",
     paddingBottom: "200px"
+  },
+  title: {
+    ...title,
+    display: "inline-block",
+    position: "relative",
+    marginTop: "30px",
+    minHeight: "32px",
+    color: "#FFFFFF",
+    textDecoration: "none"
   },
   cardHidden: {
     opacity: "0",
