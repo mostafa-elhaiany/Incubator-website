@@ -15,7 +15,6 @@ import AppNavbar from './components/generic/AppNavbar'
 import CommitteesPage from './pages/Committee/CommitteesPage'
 import Register from './pages/auth/Register/Register'
 import Login from './pages/auth/Login/Login'
-import HeadAddSlots from './pages/HeadAddSlots'
 import About from './pages/About'
 import UsersList from './pages/Users/UsersList'
 import LandingPage from './views/LandingPage'
@@ -41,7 +40,6 @@ class App extends Component {
               <Route exact path='/committees' component={CommitteesPage} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
-              <Route exact path='/headAddSlots' component={HeadAddSlots} />
               <Route exact path='/about' component={About} />
               <Route exact path='/profile' component={Profile} />
               <Route exact path='/landing' component={LandingPage} />
