@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {Alert,Button} from 'reactstrap'
+import {Alert,Button,Container} from 'reactstrap'
+import ScheduleModal from './components/ScheduleModal'
+import SchedulesList from './components/SchedulesList'
 
 class Profile extends Component {
 
@@ -23,6 +25,10 @@ class Profile extends Component {
         <div>
             <h1>welcome {this.props.user.fullName}</h1>
             <Button onClick={this.G} >testing</Button>
+            <Container>
+            <ScheduleModal />
+            <SchedulesList />
+          </Container>
         </div>
         :
         <Alert color="danger">Please login first to access this page</Alert>

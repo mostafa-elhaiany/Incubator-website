@@ -13,7 +13,7 @@ import About from './pages/About'
 import {loadUser} from './actions/authActions'
 import {Provider} from 'react-redux'
 import store from './store'
-import Profile from './pages/Profile'
+import Profile from './pages/auth/Profile'
 import UsersList from './pages/Users/UsersList'
 class App extends Component {
   componentDidMount(){
