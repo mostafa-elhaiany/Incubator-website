@@ -21,6 +21,7 @@ import UsersList from './pages/Users/UsersList'
 
 import LandingPage from './views/LandingPage'
 import Register2 from 'views/Register'
+import Login2 from 'views/Login'
 
 // import './App.css'
 // import 'bootstrap/dist/css/bootstrap.min.css'
@@ -48,6 +49,7 @@ class App extends Component {
               <Route exact path='/profile' component={Profile} />
               <Route exact path='/landing' component={LandingPage} />
               <Route exact path='/register2' component={Register2} />
+              <Route exact path='/login2' component={Login2} />
               <Route exact path='/*' component={NotFound} />
             </Switch>
           </Router>
