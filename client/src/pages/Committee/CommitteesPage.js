@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
-//import {Container,ListGroup,ListGroupItem,Button} from 'reactstrap'
-//import {CSSTransition, TransitionGroup} from 'react-transition-group'
+import React, { Component } from 'react'
 import axios from 'axios'
 import CommitteeCard from './components/CommitteeCard'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
 class CommitteesPage extends Component{
     state={
         loaded:false,
         items:[],
         chosen:"",
-        didChoose:false
+        didChoose:false,
+        sessions:[]
 
     }
+    static propTypes = {
+        isAuthenticated:PropTypes.bool,
+        error:PropTypes.object.isRequired,
+        user:PropTypes.object.isRequired
+      }
     componentDidMount(){
         axios.get('/api/committees')
         .then(res=>this.setState({
@@ -24,14 +31,30 @@ class CommitteesPage extends Component{
                 didChoose:true
             })
     }
+    select= (item)=>{
+        console.log('test ',item)
+    }
+    getSession= ()=>{
+        const id=this.state.chosen._id
+        axios.get(`/api/sessions/withCommittee/${id}`)
+        .then(res=>console.log(res.data.data))
+        .catch(err=> console.log(err))   
+    }
+
     render()
     {
+        var x;
+        if(this.state.didChoose)
+        { 
+            this.getSession()
+        }
         return this.state.loaded?
         (
             this.state.didChoose?
             (
                 <div>
-                    <p>you chose {this.state.chosen}</p>
+                    <h1>{this.state.chosen}</h1>
+                    
                     <a href="/committees/" className="btn btn-primary">Back</a>
                 </div>
             )
@@ -41,7 +64,7 @@ class CommitteesPage extends Component{
                 {this.state.items.map(item=>{
                     return (
                         <div>
-                        <CommitteeCard choose={this.choose} item={item}  />
+                            <CommitteeCard choose={this.choose} item={item} />
                         </div>
                     )
                 })}
@@ -56,5 +79,15 @@ class CommitteesPage extends Component{
         )
     }
 }
-
-export default CommitteesPage
+const mapStateToProps = state =>({
+    isAuthenticated:state.auth.isAuthenticated,
+    error:state.error,
+    user:state.auth.user,
+    type:state.auth.type
+  })
+  
+  
+export default connect(
+mapStateToProps,
+{}
+)(CommitteesPage)

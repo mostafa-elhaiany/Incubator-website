@@ -5,7 +5,8 @@ module.exports = {
     const createSchema = {
       name: Joi.string().min(3).max(80).required(),
       description: Joi.string().min(10).required(),
-      type: Joi.string().required()
+      type: Joi.string().required(),
+      image:Joi.string().required()
     }
     return Joi.validate(req, createSchema)
   },
@@ -14,8 +15,8 @@ module.exports = {
     const updateSchema = {
         name: Joi.string().min(3).max(80),
         description: Joi.string().min(10),
-        type: Joi.string()
-      
+        type: Joi.string(),
+        image:Joi.string()  
     }
     return Joi.validate(req, updateSchema)
   }

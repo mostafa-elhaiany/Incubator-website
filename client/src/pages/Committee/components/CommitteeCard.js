@@ -15,7 +15,7 @@ class CommitteCard extends Component {
     return (
         <div>
         <Card>
-          <CardImg top width="100%" src={this.state.image} alt="Card image cap" />
+          <CardImg top width="100%"   height='400px' src={this.state.image} alt="Card image cap" />
           <CardBody>
             <CardTitle><h3>{this.state.title}</h3></CardTitle>
             <CardText>{this.state.text}</CardText>
