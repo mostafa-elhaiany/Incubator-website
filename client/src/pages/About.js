@@ -37,8 +37,8 @@ render () {
             <div className="jumbotron">
                 <Fade left opposite cascade>
                 <div>
-                <img src='http://placekitten.com/500/500' title="Our board" alt="Our board" style={{ justifyContent : 'center',
-                    alignItems: 'center'} }>
+                <img src='https://res.cloudinary.com/dexmoiznt/image/upload/v1569768424/tree_pugrul' title="Our board" alt="Our board" style={{ justifyContent : 'center',
+                    alignItems: 'center', height:'600px',width:'1200px;'} }>
                 </img>
               </div>
             </Fade>
@@ -66,7 +66,7 @@ render () {
                 <div>
                 {this.state.committees.map(
                  committee=>{
-                   if(committee.type==='organizing')
+                   if(committee.type==='Organizing')
                     return <p>{committee.name}</p>
                    return <p></p>
                  }

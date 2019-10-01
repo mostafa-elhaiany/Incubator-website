@@ -1,14 +1,19 @@
 // Entity model and validator
 const Model = require('../models/HighBoard')
 const validator = require('../validations/highBoardValidations')
+const authValidator = require('../validations/authValidations')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const main = require('./main')
-
+const helperController= require('./helperController')
+const memberModel = require('../models/Member')
+const applicantModel= require('../models/Applicant')
 exports.default = async (req, res) => {
   await main.default(res, Model)
 }
-exports.create = async (req, res) => {const body = req.body
+
+exports.create = async (req, res) => {
+  const body = req.body
   if(!body)
   {
     return res.status(400).json({
@@ -23,47 +28,38 @@ exports.create = async (req, res) => {const body = req.body
       message: valid.error.details[0].message,
     })
   }
-
-  Model.findOne({email:body.email})
-  .then(applicant=>{
-      if(applicant)
-      {
-        return res.status(400).json({
-          status:"error",
-          msg:'a user with that email already exists'
-        })
-      }
-
-    const newApplicant = new Model(req.body) 
-    bcrypt.genSalt(11, (err,salt)=>{
+  const flag= await helperController.checkEmail(body.email)
+  if(!flag){
+    return res.status(400).json({
+      status:"error",
+      msg:'a user with that email already exists'
+    })
+  }
+  const newHighBoard = new Model(body) 
+  bcrypt.genSalt(10, (err,salt)=>{
+    if(err) throw err
+    bcrypt.hash(newHighBoard.password,salt,(err,hash)=>{
       if(err) throw err
-      bcrypt.hash(newApplicant.password,salt,(err,hash)=>{
-        if(err) throw err
-        newApplicant.password=hash
-        newApplicant.save()
-        .then(applicant=>{
-
-            jwt.sign(
-              {id:applicant._id},
-              process.env.jwtSecret,
-              {expiresIn:3600},
-              (err,token)=>{
-                if(err) throw err
-               
-                res.json({
-                  status:'success',
-                  token,
-                  data:applicant
-                })
-              }
-            )           
-        })
+      newHighBoard.password=hash
+      newHighBoard.save()
+      .then(highboard=>{
+          jwt.sign(
+            {id:highboard._id,type:'highboard'},
+            process.env.jwtSecret,
+            {expiresIn:3600},
+            (err,token)=>{
+              if(err) throw err
+             
+              return res.json({
+                status:'success',
+                token,
+                data:highboard
+              })
+            }
+          )           
       })
     })
-
   })
-  .catch(err=>console.log(err))
-
 }
 
 exports.read = async (req, res) => {
@@ -76,4 +72,100 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   await main.delete(req, res, Model)
+}
+
+exports.upgradeMember = async(req,res) =>{
+  const id= req.params.id
+  body= req.body
+  const member = await memberModel.findByIdAndRemove(id)
+  const HB={
+    fullName: member.fullName,
+    password: member.password,
+    email:member.email,
+    title:body.title
+  }
+  const newHighBoard = new Model(HB)
+  newHighBoard.save()
+  .then(highboard=>{
+      jwt.sign(
+        {id:highboard._id,type:'highboard'},
+        process.env.jwtSecret,
+        {expiresIn:3600},
+        (err,token)=>{
+          if(err) throw err
+         
+          return res.json({
+            status:'success',
+            token,
+            data:highboard
+          })
+        }
+      )           
+  })
+}
+
+exports.acceptApplicant = async(req,res) =>{
+  const id= req.params.id
+  body= req.body
+  const applicant = await applicantModel.findByIdAndRemove(id)
+  const member={
+    fullName: applicant.fullName,
+    password: applicant.password,
+    email:applicant.email,
+    committee:applicant.committee
+  }
+  const newMember = new memberModel(member)
+  newMember.save()
+  .then(member=>{
+      jwt.sign(
+        {id:member._id,type:'member'},
+        process.env.jwtSecret,
+        {expiresIn:3600},
+        (err,token)=>{
+          if(err) throw err
+         
+          return res.json({
+            status:'success',
+            token,
+            data:member
+          })
+        }
+      )           
+  })
+}
+
+exports.changePassword = async (req,res)=>{
+  const id = req.params.id
+  const valid = authValidator.ChangePasswordValidation(req.body)
+  if (valid.error) {
+    return res.status(400).json({
+      status: 'Error',
+      message: valid.error.details[0].message
+    })
+  }
+  const user = Model.findById(id)
+  bcrypt.genSalt(10, (err,salt)=>{
+    if(err) throw err
+    bcrypt.hash(user.password,salt,(err,hash)=>{
+      if(err) throw err
+      user.password=hash
+      user.save()
+      .then(user=>{
+          jwt.sign(
+            {id:user._id,type:'highboard'},
+            process.env.jwtSecret,
+            {expiresIn:3600},
+            (err,token)=>{
+              if(err) throw err
+             
+              return res.json({
+                status:'success',
+                token,
+                data:user
+              })
+            }
+          )           
+      })
+    })
+  })
 }

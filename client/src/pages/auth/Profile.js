@@ -13,22 +13,32 @@ class Profile extends Component {
         user:PropTypes.object.isRequired
       }
 
-     G= ()=>{
-        if(this.props.isAuthenticated)
-          console.log(this.props.user, this.props.type)
-    }
+  
 
     render () {
+      var x;
+      if(this.props.type==='highboard')
+      {
+        x=( 
+        <Container>
+          <ScheduleModal />
+          <SchedulesList />
+        </Container>
+        )
+      }
+      else if(this.props.type==='applicant'){
+        x=(
+          <div className="container">
+            <p>hope you're ready to join our team</p>
+          </div>
+        )
+      }
     return ( 
         
         this.props.isAuthenticated?
         <div>
             <h1>welcome {this.props.user.fullName}</h1>
-            <Button onClick={this.G} >testing</Button>
-            <Container>
-            <ScheduleModal />
-            <SchedulesList />
-          </Container>
+            {x}
         </div>
         :
         <Alert color="danger">Please login first to access this page</Alert>
