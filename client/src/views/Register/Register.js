@@ -1,24 +1,16 @@
 import React from "react";
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-// @material-ui/icons
-import Email from "@material-ui/icons/Email";
-import People from "@material-ui/icons/People";
+
 // reactstrap
 import {
   // Button,
-  Form,
   FormGroup,
   Label,
   Input,
   FormFeedback,
-  Spinner,
   Progress,
   Table,
   Alert
@@ -38,7 +30,6 @@ import Card from "components/theme/Card/Card.js";
 import CardBody from "components/theme/Card/CardBody.js";
 import CardHeader from "components/theme/Card/CardHeader.js";
 import CardFooter from "components/theme/Card/CardFooter.js";
-import CustomInput from "components/theme/CustomInput/CustomInput.js";
 
 // redux
 import { connect } from 'react-redux'
@@ -408,14 +399,14 @@ class Register extends React.Component {
 
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
-                      <Button color="rose" size="lg" onClick={() => this.handleButtonChange(this.state.index == 0 ? 1 : 0)}>
+                      <Button color="rose" size="lg" onClick={() => this.handleButtonChange(this.state.index === 0 ? 1 : 0)}>
                         {
-                          this.state.index == 0 ?
+                          this.state.index === 0 ?
                             "Just one more step"
                             :
                             "Back to General Info"
                         }
-                        <i className={this.state.index == 0 ? "fas fa-arrow-right" : "fas fa-arrow-left"} />
+                        <i className={this.state.index === 0 ? "fas fa-arrow-right" : "fas fa-arrow-left"} />
                       </Button>
                       <Button type='submit' color="primary" size="lg">
                         Register
