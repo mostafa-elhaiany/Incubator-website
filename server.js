@@ -12,6 +12,7 @@ const applicant = require('./routes/api/applicants')
 const committee = require('./routes/api/committees')
 const schedule = require('./routes/api/schedules')
 const auth = require('./routes/api/auth')
+const session = require('./routes/api/sessions')
 // Require Router Handlers
 const app = express()
 
@@ -46,7 +47,7 @@ app.use('/api/applicants', applicant)
 app.use('/api/committees', committee)
 app.use('/api/schedules', schedule)
 app.use('/api/auth', auth)
-
+app.use('/api/sessions', session)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
