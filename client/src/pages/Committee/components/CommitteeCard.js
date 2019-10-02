@@ -9,6 +9,7 @@ class CommitteCard extends Component {
         title:this.props.item.name,
         text:this.props.item.description,
         image:this.props.item.image,
+        committee:this.props.item
         
     }
   render () {
@@ -19,7 +20,7 @@ class CommitteCard extends Component {
           <CardBody>
             <CardTitle><h3>{this.state.title}</h3></CardTitle>
             <CardText>{this.state.text}</CardText>
-            <Button onClick={()=>this.props.choose(this.state.title)}>More about {this.state.title}</Button>
+            <Button onClick={()=>this.props.choose(this.state.committee)}>More about {this.state.title}</Button>
           </CardBody>
         </Card>
       </div>
