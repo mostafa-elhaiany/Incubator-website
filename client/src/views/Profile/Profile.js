@@ -75,7 +75,7 @@ function Profile(props) {
                   </div>
                   <div className={classes.name}>
                     <h3 className={classes.title}>{props.user.fullName}</h3>
-                    <h6>DESIGNER</h6>
+                    <h6>{props.type}</h6>
                   </div>
                 </div>
               </GridItem>
