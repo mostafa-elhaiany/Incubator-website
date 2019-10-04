@@ -44,7 +44,7 @@ import image from "assets/img/bg7.jpg";
 class Register extends React.Component {
   state = {
     committees: [],
-    schedules: [],
+    schedules: null,
     loaded: false,
     percentage: 0,
     email: null,
@@ -103,6 +103,15 @@ class Register extends React.Component {
       if(this.state.First===null)
          this.setState({ percentage: (this.state.percentage+9) })  
       this.setState({ First: e.target.value })
+
+      Axios.get(`/api/schedules/withType/${e.target.value}`)
+      .then(res => {
+        console.log('res ',res.data.data)
+         this.setState({
+          schedules: res.data.data
+        })
+      })
+      
     }
     else if (e.target.name === 'selectSecond') {
       if(this.state.Second===null)
@@ -122,7 +131,7 @@ class Register extends React.Component {
     else if (e.target.name === 'reserve') {
       if(this.state.slot===null)
         this.setState({ percentage: (this.state.percentage+9) })  
-      await this.setState({
+      this.setState({
         slot: schedule.slot,
         day: schedule.day
       })
@@ -191,18 +200,12 @@ class Register extends React.Component {
       this.setState({ cardAnimation: "" })
     }, 700);
 
-    Axios.get('/api/schedules')
-      .then(res => {
-        this.setState({
-          schedules: res.data.data
-        })
-      })
     Axios.get('/api/committees')
       .then(res => this.setState({
         committees: res.data.data,
         loaded: true
       }))
-      .catch(err => console.log(err))
+      .catch(err => console.log(err.respone.data))
   }
 
   componentDidUpdate(prevProps) {
@@ -335,7 +338,14 @@ class Register extends React.Component {
         </FormGroup>
       </div>
     );
-    const table = (
+    const table = this.state.schedules===null?
+    (
+      <div>
+        <h4>please choose a first preference first</h4>
+      </div>
+    )
+    :
+    (
       <div >
         <h3>Choose  a reservation slot</h3>
 

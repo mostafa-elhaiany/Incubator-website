@@ -6,6 +6,9 @@ const controller = require('../../controllers/scheduleController')
 // Read all Schedule (Default route)
 router.get('/', controller.default)
 
+// Read all Schedule (Default route)
+router.get('/withType/:type', controller.withType)
+
 // Create a new SChedule
 router.post('/', controller.create)
 
