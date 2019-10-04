@@ -13,6 +13,8 @@ module.exports = {
       firstPrefrence: Joi.string().required(),
       secondPrefrence: Joi.string().required(),
       why:Joi.string().min(15).required(),
+      experience:Joi.string().required(),
+      hobbies:Joi.string().required(),
       GUC_ID: Joi.string().required(),
       rejected:Joi.bool(),
       feedBack:Joi.string()
@@ -30,6 +32,8 @@ module.exports = {
       firstPrefrence: Joi.string(),
       secondPrefrence: Joi.string(),
       why:Joi.string().min(15),
+      experience:Joi.string(),
+      hobbies:Joi.string(),
       GUC_ID: Joi.string(),
       rejected:Joi.bool(),
       feedBack:Joi.string()
