@@ -104,6 +104,31 @@ exports.upgradeMember = async(req,res) =>{
   })
 }
 
+exports.rejectApplicant = async (req,res) =>{
+  const id= req.params.id
+  body= req.body
+  const applicant = await applicantModel.findById(id)
+  applicant['rejected']=true;
+  applicant['feedBack']=req.body.feedBack; 
+  applicant.save()
+  .then(applicant=>{
+      jwt.sign(
+        {id:applicant._id,type:'applicant'},
+        process.env.jwtSecret,
+        {expiresIn:3600},
+        (err,token)=>{
+          if(err) throw err
+         
+          return res.json({
+            status:'success',
+            token,
+            data:applicant
+          })
+        }
+      )           
+  })
+}
+
 exports.acceptApplicant = async(req,res) =>{
   const id= req.params.id
   body= req.body
