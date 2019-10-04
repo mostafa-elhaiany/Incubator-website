@@ -47,7 +47,9 @@ function Profile(props) {
     classes.imgFluid
   );
   const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
-  console.log(props.user)
+  const applicant = props.type==='applicant'? (
+                  <p>your application here</p>
+    ):(<p>you're not an applicant with application so nothing to view here :D</p>) 
   return (
     <div>
       <Header
@@ -100,6 +102,12 @@ function Profile(props) {
                       tabContent: (
                         <GridContainer justify="center">
                           <GridItem xs={12} sm={12} md={4}>
+                            <div className={classes.description}>
+                                <p>NAME:{props.user.fullName}</p>
+                                <p>email:{props.user.email}</p>
+                                
+                                <Button >change password</Button> 
+                            </div>
                             {/* <img
                               alt="..."
                               // src={studio1}
@@ -120,43 +128,6 @@ function Profile(props) {
                             <img
                               alt="..."
                               // src={studio4}
-                              className={navImageClasses}
-                            /> */}
-                          </GridItem>
-                        </GridContainer>
-                      )
-                    },
-                    {
-                      tabButton: "Application progress",
-                      tabIcon: Done,
-                      tabContent: (
-                        <GridContainer justify="center">
-                          <GridItem xs={12} sm={12} md={4}>
-                            {/* <img
-                              alt="..."
-                              // src={work1}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={work2}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={work3}
-                              className={navImageClasses}
-                            />
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={4}>
-                            <img
-                              alt="..."
-                              // src={work4}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={work5}
                               className={navImageClasses}
                             /> */}
                           </GridItem>
@@ -196,6 +167,17 @@ function Profile(props) {
                               // src={studio1}
                               className={navImageClasses}
                             /> */}
+                          </GridItem>
+                        </GridContainer>
+                      )
+                    },
+                    {
+                      tabButton: "Application progress",
+                      tabIcon: Done,
+                      tabContent: (
+                        <GridContainer justify="center">
+                          <GridItem xs={12} sm={12} md={4}>
+                            {applicant}
                           </GridItem>
                         </GridContainer>
                       )
