@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-
+import React, { Component, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+import { LinearProgress } from '@material-ui/core';
 
 // redux stuff
 import { Provider } from 'react-redux'
@@ -18,15 +19,16 @@ import Login from './pages/auth/Login/Login'
 import About from './pages/About'
 import UsersList from './pages/Users/UsersList'
 
-import LandingPage from './views/LandingPage'
-import Register2 from 'views/Register'
-import Login2 from 'views/Login'
-import Profile2 from 'views/Profile'
-import About2 from 'views/About'
-import Committees2 from 'views/Committees'
 
 // import './App.css'
 // import 'bootstrap/dist/css/bootstrap.min.css'
+
+const LandingPage = React.lazy(() => import('./views/LandingPage'));
+const Register2 = React.lazy(() => import('views/Register'));
+const Login2 = React.lazy(() => import('views/Login'));
+const Profile2 = React.lazy(() => import('views/Profile'));
+const About2 = React.lazy(() => import('views/About'));
+const Committees2 = React.lazy(() => import('views/Committees'));
 
 class App extends Component {
 
@@ -40,22 +42,24 @@ class App extends Component {
         <React.Fragment >
           <Router >
             {/* <AppNavbar/> */}
-            <Switch>
-              <Route exact path='/' component={HomePage} />
-              <Route exact path='/users/' component={UsersList} />
-              <Route exact path='/committees' component={CommitteesPage} />
-              <Route exact path='/register' component={Register} />
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/about' component={About} />
-              <Route exact path='/profile' component={Profile} />
-              <Route exact path='/landing' component={LandingPage} />
-              <Route exact path='/register2' component={Register2} />
-              <Route exact path='/login2' component={Login2} />
-              <Route exact path='/profile2' component={Profile2} />
-              <Route exact path='/about2' component={About2} />
-              <Route exact path='/committees2' component={Committees2} />
-              <Route exact path='/*' component={NotFound} />
-            </Switch>
+            <Suspense fallback={<LinearProgress variant='determinate' value={100}></LinearProgress>}>
+              <Switch>
+                <Route exact path='/' component={HomePage} />
+                <Route exact path='/users/' component={UsersList} />
+                <Route exact path='/committees' component={CommitteesPage} />
+                <Route exact path='/register' component={Register} />
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/about' component={About} />
+                <Route exact path='/profile' component={Profile} />
+                <Route exact path='/landing' component={LandingPage} />
+                <Route exact path='/register2' component={Register2} />
+                <Route exact path='/login2' component={Login2} />
+                <Route exact path='/profile2' component={Profile2} />
+                <Route exact path='/about2' component={About2} />
+                <Route exact path='/committees2' component={Committees2} />
+                <Route exact path='/*' component={NotFound} />
+              </Switch>
+            </Suspense>
           </Router>
         </React.Fragment>
       </Provider>
