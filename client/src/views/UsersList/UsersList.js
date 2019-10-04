@@ -75,7 +75,7 @@ class UsersList extends React.Component {
   upgrade = (id) => {
     Axios.put(`/api/accept/${id}`)
       .then(res => console.log(res.data.data))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response.data))
   }
   reject = (id, feedback) => {
     const body = {
@@ -83,7 +83,7 @@ class UsersList extends React.Component {
     }
     Axios.put(`/api/reject/${id}`, body)
       .then(res => console.log(res.data.data))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response.data))
   }
   empty = () => {
     this.setState({
@@ -132,7 +132,7 @@ class UsersList extends React.Component {
                   {
                     this.state.userSelected ?
                       <div>
-                        <UserProfile accept={this.upgrade} reject={this.reject} isAuthenticated={this.props.isAuthenticated} type={this.props.type} user={this.state.selectedUser} goBack={this.empty} />
+                        <UserProfile upgrade={this.upgrade} reject={this.reject} isAuthenticated={this.props.isAuthenticated} type={this.props.type} user={this.state.selectedUser} goBack={this.empty} />
                       </div>
                       :
                       (
