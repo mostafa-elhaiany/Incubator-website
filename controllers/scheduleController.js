@@ -21,3 +21,11 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   await main.delete(req, res, Model)
 }
+exports.withType= async (req,res)=>{
+  const type = req.params.type
+  const allSchedules = await Model.find({committee:type})
+  return res.json({
+    status:'success',
+    data:allSchedules
+  })
+}
