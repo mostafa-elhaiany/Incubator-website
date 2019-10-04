@@ -3,15 +3,8 @@ import axios from 'axios'
 import CommitteeCard from './components/CommitteeCard'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button } from 'semantic-ui-react'
-import {
-    Card,
-    CardText,
-    CardBody,
-    CardTitle
-} from 'reactstrap'
 import SessionsModal from './components/SessionsModal'
-import Fade from 'react-reveal/Fade'
+import SessionCard from './components/SessionCard'
 
 class CommitteesPage extends Component{
     state={
@@ -21,7 +14,6 @@ class CommitteesPage extends Component{
         didChoose:false,
         sessions:[],
         sessionLoaded:false,
-        show: false
 
     }
     static propTypes = {
@@ -36,9 +28,7 @@ class CommitteesPage extends Component{
             loaded:true
         }))
     }
-    handleClick() {
-        this.setState({ show: !this.state.show });
-      }
+
     choose = (committee)=>{
             this.setState({
                 chosen:committee,
@@ -80,22 +70,7 @@ class CommitteesPage extends Component{
                      {this.state.sessionLoaded?
                          this.state.sessions.map(session=>{
                                 return (<div className='jumbotron'>
-                                        <Card>
-                                            <CardBody>
-                                             <CardTitle><h3>{session.title}</h3></CardTitle>
-                                             <CardText>{session.contentDescription}</CardText>
-                                                <Fade bottom collapse when={this.state.show}>
-                                                <a href={`${session.content}`}>session link</a>
-                                                </Fade>
-                                                <button
-                                                    className="btn btn-success my-5"
-                                                    type="button"
-                                                    onClick={()=>this.handleClick()}
-                                                    >
-                                                    { this.state.show ? 'Hide' : 'Show' } link
-                                                </button>
-                                            </CardBody>
-                                        </Card>
+                                       <SessionCard session={session}/> 
                                 </div>)
                             })
                         :<div>sessions loading please wait</div>}
