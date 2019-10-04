@@ -123,7 +123,7 @@ const signupPageStyle = {
     margin: "10px 0 0"
   },
   main2: {
-    background: "#FFFFFF",
+    // background: "#FFFFFF",
     position: "relative",
     zIndex: "3"
   },
