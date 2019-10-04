@@ -23,6 +23,7 @@ import Register2 from 'views/Register'
 import Login2 from 'views/Login'
 import Profile2 from 'views/Profile'
 import About2 from 'views/About'
+import Committees2 from 'views/Committees'
 
 // import './App.css'
 // import 'bootstrap/dist/css/bootstrap.min.css'
@@ -52,6 +53,7 @@ class App extends Component {
               <Route exact path='/login2' component={Login2} />
               <Route exact path='/profile2' component={Profile2} />
               <Route exact path='/about2' component={About2} />
+              <Route exact path='/committees2' component={Committees2} />
               <Route exact path='/*' component={NotFound} />
             </Switch>
           </Router>
