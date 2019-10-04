@@ -69,7 +69,7 @@ class About extends React.Component {
             <GridItem className={classes.navWrapper}>
 
               <Fade bottom>
-                <div className="jumbotron">
+                <div>
                   <h1>Our Mission</h1>
                   <Fade left opposite cascade>
                     <h5>
@@ -82,7 +82,7 @@ class About extends React.Component {
               </Fade>
 
               <Fade bottom>
-                <div className="jumbotron">
+                <div>
                   <h1>Our board</h1>
                   <Fade left opposite cascade>
                     <img src='https://res.cloudinary.com/dexmoiznt/image/upload/v1569768424/tree_pugrul' title="Our board" alt="Our board" style={{
@@ -96,7 +96,7 @@ class About extends React.Component {
               </Fade>
 
               <Fade bottom>
-                <div className="jumbotron">
+                <div>
                   <h1>Follow us to never miss an update!</h1>
                   <Fade left opposite cascade>
                     <Tooltip
@@ -136,12 +136,12 @@ class About extends React.Component {
               </Fade>
 
               <Fade bottom>
-                <div className="jumbotron">
+                <div>
                   <h1>Our comittes</h1>
                   <br />
-                  <h3>Organizing</h3>
                   <Fade left opposite cascade>
                     <div>
+                      <h3>Organizing</h3>
                       {this.state.committees.map(
                         committee => {
                           if (committee.type === 'Organizing')
@@ -151,9 +151,9 @@ class About extends React.Component {
                       )}
                     </div>
                   </Fade>
-                  <h3>Projects</h3>
                   <Fade left opposite cascade>
                     <div>
+                      <h3>Projects</h3>
                       {this.state.committees.map(
                         committee => {
                           if (committee.type === 'projects')
