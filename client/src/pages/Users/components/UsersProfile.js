@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import {Alert,Button,Table} from 'reactstrap'
 class UsersProfile extends Component {
-    
 
+    state={
+        feedback:""
+    }
+
+    onInput = (e)=>{
+        this.setState({feedback:e.target.value})
+    }
     render () {
     return ( 
         
@@ -34,8 +40,17 @@ class UsersProfile extends Component {
       </Table>
 
             <br/>
-            <a className="btn btn-success" onClick={()=>{console.log('accepted')}}>accept</a>
-            <a className="btn btn-danger" onClick={()=>{console.log('rejected')}}>reject</a>
+            {
+                this.props.type==='highboard' && !this.props.user.rejected ?
+            (
+                <div>
+            <a className="btn btn-success" onClick={()=>{this.props.upgrade(this.props.user._id)}}>accept</a>
+            <input type='text' name="feedback" onInput={this.onInput} />
+            <a className="btn btn-danger" onClick={()=>{this.props.reject(this.props.user._id,this.state.feedback)}}>reject</a>
+                </div>
+            ):
+            null
+            }
             
 <br/><br/>
             <Button onClick={this.props.goBack}>go Back</Button>

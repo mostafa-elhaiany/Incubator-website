@@ -51,6 +51,19 @@ choose = async id => {
       })
       this.setState({typed:true})
   }
+  upgrade = (id)=>{
+      Axios.put(`/api/accept/${id}`)
+      .then(res=>console.log(res.data.data))
+      .catch(error=>console.log(error))
+  }
+  reject =(id,feedback)=>{
+    const body= {
+      feedback
+    }
+    Axios.put(`/api/reject/${id}`, body)
+    .then(res=>console.log(res.data.data))
+    .catch(error=>console.log(error))
+  }
 empty =()=>{
   this.setState({
     userSelected:false,
@@ -69,7 +82,7 @@ empty =()=>{
       this.state.userSelected?
       (
           <div>
-             <UserProfile isAuthenticated={this.props.isAuthenticated} type={this.props.type} user={this.state.selectedUser} goBack={this.empty} />
+             <UserProfile accept={this.upgrade} reject={this.reject} isAuthenticated={this.props.isAuthenticated} type={this.props.type} user={this.state.selectedUser} goBack={this.empty} />
           </div>
       )
       :
