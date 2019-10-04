@@ -23,17 +23,6 @@ import profile from "assets/img/no-profile-picture.png";
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-// import studio1 from "assets/img/examples/studio-1.jpg";
-// import studio2 from "assets/img/examples/studio-2.jpg";
-// import studio3 from "assets/img/examples/studio-3.jpg";
-// import studio4 from "assets/img/examples/studio-4.jpg";
-// import studio5 from "assets/img/examples/studio-5.jpg";
-// import work1 from "assets/img/examples/olu-eletu.jpg";
-// import work2 from "assets/img/examples/clem-onojeghuo.jpg";
-// import work3 from "assets/img/examples/cynthia-del-rio.jpg";
-// import work4 from "assets/img/examples/mariya-georgieva.jpg";
-// import work5 from "assets/img/examples/clem-onojegaw.jpg";
-
 import styles from "assets/jss/views/ProfilePage/profilePage.js";
 
 const useStyles = makeStyles(styles);

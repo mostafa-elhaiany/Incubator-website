@@ -29,6 +29,7 @@ const Login2 = React.lazy(() => import('views/Login'));
 const Profile2 = React.lazy(() => import('views/Profile'));
 const About2 = React.lazy(() => import('views/About'));
 const Committees2 = React.lazy(() => import('views/Committees'));
+const UsersList2 = React.lazy(() => import('views/UsersList'));
 
 class App extends Component {
 
@@ -57,6 +58,7 @@ class App extends Component {
                 <Route exact path='/profile2' component={Profile2} />
                 <Route exact path='/about2' component={About2} />
                 <Route exact path='/committees2' component={Committees2} />
+                <Route exact path='/users2/' component={UsersList2} />
                 <Route exact path='/*' component={NotFound} />
               </Switch>
             </Suspense>
