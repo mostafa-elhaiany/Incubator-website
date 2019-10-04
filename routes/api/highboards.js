@@ -21,6 +21,8 @@ router.delete('/:id', controller.delete)
 
 router.put('/upgrade/:id',highAuth,controller.upgradeMember)
 
+router.put('/reject/:id',highAuth,controller.rejectApplicant)
+
 router.put('/accept/:id',highAuth,controller.acceptApplicant)
 
 

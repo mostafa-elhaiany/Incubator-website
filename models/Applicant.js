@@ -37,6 +37,14 @@ const ApplicantSchema = new Schema({
     type: String,
     required:true
   },
+  hobbies:{
+    type:String,
+    required:true
+  },
+  experience:{
+    type:String,
+    required:true
+  },
   GUC_ID: {
     type: String,
     required:true

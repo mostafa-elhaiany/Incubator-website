@@ -47,16 +47,18 @@ class Register extends React.Component {
     schedules: [],
     loaded: false,
     percentage: 0,
-    email: "",
-    name: "",
-    password: "",
-    Confirm: "",
-    First: "",
-    Second: "",
-    why: "",
-    day: "",
-    slot: "",
-    id: "",
+    email: null,
+    name: null,
+    password: null,
+    Confirm: null,
+    First: null,
+    Second: null,
+    why: null,
+    day: null,
+    slot: null,
+    id: null,
+    exp:null,
+    hobbies:null,
     validEmail: "",
     validName: "",
     validPassword: "",
@@ -74,43 +76,78 @@ class Register extends React.Component {
 
   Input = async (e, schedule) => {
     if (e.target.name === 'email') {
+      if(this.state.email===null)
+          this.setState({ percentage: (this.state.percentage+9) })  
       this.setState({ email: e.target.value })
     }
     else if (e.target.name === 'name') {
+      if(this.state.name===null)
+          this.setState({ percentage: (this.state.percentage+9) })  
       this.setState({ name: e.target.value })
     }
     else if (e.target.name === 'password') {
+      if(this.state.password===null)
+          this.setState({ percentage: (this.state.percentage+9) })  
       this.setState({ password: e.target.value })
     }
     else if (e.target.name === 'Confirmpassword') {
-      if (e.target.value === this.state.password)
+      if (e.target.value === this.state.password){
+        if(this.state.Confirm===null)
+            this.setState({ percentage: (this.state.percentage+9) })  
         this.setState({ Confirm: e.target.value })
+      }
       else
         console.log('passwords must match')
     }
     else if (e.target.name === 'selectFirst') {
-      console.log(e.target.value)
+      if(this.state.First===null)
+         this.setState({ percentage: (this.state.percentage+9) })  
       this.setState({ First: e.target.value })
     }
     else if (e.target.name === 'selectSecond') {
+      if(this.state.Second===null)
+         this.setState({ percentage: (this.state.percentage+9) })  
       this.setState({ Second: e.target.value })
     }
     else if (e.target.name === 'text') {
+      if(this.state.why===null)
+          this.setState({ percentage: (this.state.percentage+10) })  
       this.setState({ why: e.target.value })
     }
     else if (e.target.name === 'id') {
+      if(this.state.id===null)
+      this.setState({ percentage: (this.state.percentage+9) })  
       this.setState({ id: e.target.value })
     }
     else if (e.target.name === 'reserve') {
+      if(this.state.slot===null)
+        this.setState({ percentage: (this.state.percentage+9) })  
       await this.setState({
         slot: schedule.slot,
         day: schedule.day
+      })
+    }
+    else if(e.target.name=='exp')
+    {
+      if(this.state.exp===null)
+        this.setState({ percentage: (this.state.percentage+8) })  
+      this.setState({
+        exp:e.target.value
+      })
+    }
+    else if(e.target.name=='hobbies')
+    {
+      if(this.state.hobbies===null)
+        this.setState({ percentage: (this.state.percentage+8) })  
+      this.setState({
+        hobbies:e.target.value
       })
     }
   }
 
   submit = (e) => {
     e.preventDefault()
+    this.setState({ percentage: 100 })  
     console.log(this.state)
     const newApplcant = {
       email: this.state.email,
@@ -119,6 +156,8 @@ class Register extends React.Component {
       firstPrefrence: this.state.First,
       secondPrefrence: this.state.Second,
       why: this.state.why,
+      hobbies:this.state.hobbies,
+      exp:this.state.exp,
       reservation: {
         day: this.state.day,
         slot: this.state.slot
@@ -284,7 +323,18 @@ class Register extends React.Component {
         </FormGroup>
       </div>
     );
-
+    const backgroundInfo = (
+      <div >
+        <FormGroup>
+          <Label for="experience">previous Experience</Label>
+          <Input type="text" name="exp" id="exampleexp" placeholder="type NA if there's none" onInput={(e) => this.Input(e)}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="hobbies">Hobbies</Label>
+          <Input type="text" name="hobbies" id="hobbies" placeholder="any hobbies you have seperated by commas" onInput={(e) => this.Input(e)}/>
+        </FormGroup>
+      </div>
+    );
     const table = (
       <div >
         <h3>Choose  a reservation slot</h3>
@@ -386,6 +436,7 @@ class Register extends React.Component {
                       <Tabs value={this.state.index} fullWidth onChange={this.handleTabChange} style={styles.tabs}>
                         <Tab label="General Info" />
                         <Tab label="Interview Slot" />
+                        <Tab label="Background Info" />
                       </Tabs>
                       <SwipeableViews containerStyle={styles.slideContainer} index={this.state.index} onChangeIndex={this.handleChangeIndex}>
                         {
@@ -393,6 +444,9 @@ class Register extends React.Component {
                         }
                         {
                           table
+                        }
+                        {
+                          backgroundInfo
                         }
                       </SwipeableViews>
 
