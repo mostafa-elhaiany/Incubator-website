@@ -38,7 +38,13 @@ class UsersList extends React.Component {
     users: [],
     loaded: false,
     userLoaded: false,
-    selectedUser: null
+    selectedUser: null,
+    config: {
+      headers: {
+        'Content-type': 'application/json',
+        'x-auth-token':this.props.token
+      }
+    }
 
   }
 
@@ -73,15 +79,16 @@ class UsersList extends React.Component {
     this.setState({ typed: true })
   }
   upgrade = (id) => {
-    Axios.put(`/api/accept/${id}`)
+    Axios.put(`/api/highboards/accept/${id}`,this.state.config)
       .then(res => console.log(res.data.data))
       .catch(error => console.log(error.response.data))
   }
   reject = (id, feedback) => {
     const body = {
-      feedback
+      feedBack:feedback
     }
-    Axios.put(`/api/reject/${id}`, body)
+    
+    Axios.put(`/api/highboards/reject/${id}`, body,this.state.config)
       .then(res => console.log(res.data.data))
       .catch(error => console.log(error.response.data))
   }
@@ -206,7 +213,8 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
   user: state.auth.user,
-  type: state.auth.type
+  type: state.auth.type,
+  token: state.auth.token
 })
 
 export default connect(mapStateToProps)(

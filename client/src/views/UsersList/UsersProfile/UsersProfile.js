@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Alert, Button, Table } from 'reactstrap'
+import { Alert, Button, Table, Label,Input } from 'reactstrap'
+
 class UsersProfile extends Component {
 
   state = {
@@ -46,7 +47,9 @@ class UsersProfile extends Component {
                 <div>
                   <a className="btn btn-success" onClick={() => { this.props.upgrade(this.props.user._id) }}>accept</a>
                   <br />
-                  <input type='text' name="feedback" onInput={this.onInput} />
+                  <Label for="exampleText">Feedback for rejecting</Label>
+                  <Input type="textarea" name="feedback" id="exampleText" onInput={this.onInput}
+                  />
                   <a className="btn btn-danger" onClick={() => { this.props.reject(this.props.user._id, this.state.feedback) }}>reject</a>
                 </div>
               ) :
