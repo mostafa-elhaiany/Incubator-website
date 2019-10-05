@@ -38,7 +38,13 @@ function Profile(props) {
   );
   const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
   const applicant = props.type==='applicant'? (
-                  <p>your application here</p>
+                 <div>
+                  <p>your application here, if you already did your interview you'll see whether or not you're rejected along with your feedback
+                    however if you're accepted you'll find yourself logging in as a member
+                  </p>
+                  <p> rejected: {props.user.rejected}</p>
+                  <p>feedback: {props.user.feedBack}</p>
+                  </div>
     ):(<p>you're not an applicant with application so nothing to view here :D</p>) 
 
   return (
@@ -96,31 +102,8 @@ function Profile(props) {
                             <div className={classes.description}>
                                 <p>NAME:{props.user.fullName}</p>
                                 <p>email:{props.user.email}</p>
-                                
                                 <ChangePassword type={props.type} id={props.user._id} config={{headers:{'Content-type': 'application/json','x-auth-token':props.token}}} />
                             </div>
-                            {/* <img
-                              alt="..."
-                              // src={studio1}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={studio2}
-                              className={navImageClasses}
-                            />
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={4}>
-                            <img
-                              alt="..."
-                              // src={studio5}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={studio4}
-                              className={navImageClasses}
-                            /> */}
                           </GridItem>
                         </GridContainer>
                       )

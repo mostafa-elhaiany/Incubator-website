@@ -198,40 +198,58 @@ exports.changePassword = async (req,res)=>{
     })
   }
 var user;  
+var CurrModel;
+var password='';
 if(req.body.type==='applicant')
-  user = applicant.findById(id) 
+{ 
+   user = await applicant.findById(id)
+   CurrModel=applicant
+   password=user.password
+}
 else if(req.body.type==='member')
-  user = member.findById(id)
+{
+    user = await member.findById(id)
+    CurrModel=member
+    password=user.password
+}
 else if(req.body.type==='highboard')
-  user = highBoard.findById(id)
+{
+   user = await highBoard.findById(id)
+   CurrModel=highBoard
+   password=user.password
+}
 else{
   res.status(404).json({
     status:'error',
     message:'type doesnt exist'
   })
 }
-  bcrypt.genSalt(10, (err,salt)=>{
-    if(err) throw err
-    bcrypt.hash(user.password,salt,(err,hash)=>{
-      if(err) throw err
-      user.password=hash
-      user.save()
-      .then(user=>{
-          jwt.sign(
-            {id:user._id,type:'applicant'},
-            process.env.jwtSecret,
-            {expiresIn:3600},
-            (err,token)=>{
-              if(err) throw err
-             
-              return res.json({
-                status:'success',
-                token,
-                data:user
-              })
-            }
-          )           
-      })
-    })
+if (!bcrypt.compareSync(req.body.password,password)) {
+  return res.status(400).json({
+    status: 'error',
+    message: `Wrong password`
   })
+}
+if (req.body.newPassword !== req.body.confirmPassword) {
+  return res.status(400).json({
+    status: 'Error',
+    message: `Passwords don't match`
+  })
+}
+
+
+try {
+  const salt = bcrypt.genSaltSync(10)
+  const hashedPassword = bcrypt.hashSync(req.body.newPassword, salt)
+  const newUser = await CurrModel.findByIdAndUpdate(id, { password: hashedPassword }, { new: true })
+  return res.json({
+    status: 'Success',
+    message: `your password was updated successfully`,
+    data: newUser })
+} catch (error) {
+  return res.json({
+    status: 'Error',
+    message: error.message
+  })
+}
 }

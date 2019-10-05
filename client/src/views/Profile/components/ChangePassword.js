@@ -64,7 +64,7 @@ class ChangePassword extends Component {
           </Button>
         
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Add To Sessions List</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Change Password</ModalHeader>
           <ModalBody>
            { this.state.message?
            <Alert color="danger">
