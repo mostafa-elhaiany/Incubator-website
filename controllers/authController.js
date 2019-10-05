@@ -187,3 +187,69 @@ exports.getType = async (req,res) =>{
       })
     }
 }
+
+exports.changePassword = async (req,res)=>{
+  const id = req.params.id
+  const valid = validator.ChangePasswordValidation(req.body)
+  if (valid.error) {
+    return res.status(400).json({
+      status: 'Error',
+      message: valid.error.details[0].message
+    })
+  }
+var user;  
+var CurrModel;
+var password='';
+if(req.body.type==='applicant')
+{ 
+   user = await applicant.findById(id)
+   CurrModel=applicant
+   password=user.password
+}
+else if(req.body.type==='member')
+{
+    user = await member.findById(id)
+    CurrModel=member
+    password=user.password
+}
+else if(req.body.type==='highboard')
+{
+   user = await highBoard.findById(id)
+   CurrModel=highBoard
+   password=user.password
+}
+else{
+  res.status(404).json({
+    status:'error',
+    message:'type doesnt exist'
+  })
+}
+if (!bcrypt.compareSync(req.body.password,password)) {
+  return res.status(400).json({
+    status: 'error',
+    message: `Wrong password`
+  })
+}
+if (req.body.newPassword !== req.body.confirmPassword) {
+  return res.status(400).json({
+    status: 'Error',
+    message: `Passwords don't match`
+  })
+}
+
+
+try {
+  const salt = bcrypt.genSaltSync(10)
+  const hashedPassword = bcrypt.hashSync(req.body.newPassword, salt)
+  const newUser = await CurrModel.findByIdAndUpdate(id, { password: hashedPassword }, { new: true })
+  return res.json({
+    status: 'Success',
+    message: `your password was updated successfully`,
+    data: newUser })
+} catch (error) {
+  return res.json({
+    status: 'Error',
+    message: error.message
+  })
+}
+}

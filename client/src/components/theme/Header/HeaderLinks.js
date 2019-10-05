@@ -35,6 +35,9 @@ function HeaderLinks(props) {
         <Link to="/profile/" className={classes.dropdownLink}>
           My Profile
             </Link>,
+            <Link to="/users/" className={classes.dropdownLink}>
+            All Applicants
+              </Link>,
         <a
           onClick={props.logout}
           className={classes.dropdownLink}>

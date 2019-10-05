@@ -22,6 +22,7 @@ import styles from "assets/jss/views/LandingPage/landingPage";
 import ProjectsSection from "./Sections/ProjectsSection";
 import TeamSection from "./Sections/TeamSection.js";
 import WorkSection from "./Sections/WorkSection.js";
+import OrganizingSection from "./Sections/OrganizingSection";
 
 // const useStyles = makeStyles(styles);
 // const classes = useStyles();
@@ -37,7 +38,6 @@ class LandingPage extends React.Component {
         <Header
           color="transparent"
           routes={dashboardRoutes}
-          brand="Incubator"
           rightLinks={
             <HeaderLinks
               isAuthenticated={this.props.isAuthenticated}
@@ -46,7 +46,7 @@ class LandingPage extends React.Component {
           }
           fixed
           changeColorOnScroll={{
-            height: 400,
+            height: 100,
             color: "white"
           }}
           {...rest}
@@ -66,7 +66,7 @@ class LandingPage extends React.Component {
                 <Button
                   color="danger"
                   size="lg"
-                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ref=creativetim"
+                  href="https://www.youtube.com/watch?v=fNbrxX5fSOk"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -80,6 +80,7 @@ class LandingPage extends React.Component {
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
             <ProjectsSection />
+            <OrganizingSection/>
             <TeamSection />
             <WorkSection />
           </div>

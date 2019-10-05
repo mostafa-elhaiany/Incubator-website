@@ -57,8 +57,8 @@ class Register extends React.Component {
     day: null,
     slot: null,
     id: null,
-    exp:null,
-    hobbies:null,
+    exp: null,
+    hobbies: null,
     validEmail: "",
     validName: "",
     validPassword: "",
@@ -76,87 +76,85 @@ class Register extends React.Component {
 
   Input = async (e, schedule) => {
     if (e.target.name === 'email') {
-      if(this.state.email===null)
-          this.setState({ percentage: (this.state.percentage+9) })  
+      if (this.state.email === null)
+        this.setState({ percentage: (this.state.percentage + 9) })
       this.setState({ email: e.target.value })
     }
     else if (e.target.name === 'name') {
-      if(this.state.name===null)
-          this.setState({ percentage: (this.state.percentage+9) })  
+      if (this.state.name === null)
+        this.setState({ percentage: (this.state.percentage + 9) })
       this.setState({ name: e.target.value })
     }
     else if (e.target.name === 'password') {
-      if(this.state.password===null)
-          this.setState({ percentage: (this.state.percentage+9) })  
+      if (this.state.password === null)
+        this.setState({ percentage: (this.state.percentage + 9) })
       this.setState({ password: e.target.value })
     }
     else if (e.target.name === 'Confirmpassword') {
-      if (e.target.value === this.state.password){
-        if(this.state.Confirm===null)
-            this.setState({ percentage: (this.state.percentage+9) })  
+      if (e.target.value === this.state.password) {
+        if (this.state.Confirm === null)
+          this.setState({ percentage: (this.state.percentage + 9) })
         this.setState({ Confirm: e.target.value })
       }
       else
         console.log('passwords must match')
     }
     else if (e.target.name === 'selectFirst') {
-      if(this.state.First===null)
-         this.setState({ percentage: (this.state.percentage+9) })  
+      if (this.state.First === null)
+        this.setState({ percentage: (this.state.percentage + 9) })
       this.setState({ First: e.target.value })
 
       Axios.get(`/api/schedules/withType/${e.target.value}`)
-      .then(res => {
-        console.log('res ',res.data.data)
-         this.setState({
-          schedules: res.data.data
+        .then(res => {
+          console.log('res ', res.data.data)
+          this.setState({
+            schedules: res.data.data
+          })
         })
-      })
-      
+
     }
     else if (e.target.name === 'selectSecond') {
-      if(this.state.Second===null)
-         this.setState({ percentage: (this.state.percentage+9) })  
+      if (this.state.Second === null)
+        this.setState({ percentage: (this.state.percentage + 9) })
       this.setState({ Second: e.target.value })
     }
     else if (e.target.name === 'text') {
-      if(this.state.why===null)
-          this.setState({ percentage: (this.state.percentage+10) })  
+      if (this.state.why === null)
+        this.setState({ percentage: (this.state.percentage + 10) })
       this.setState({ why: e.target.value })
     }
     else if (e.target.name === 'id') {
-      if(this.state.id===null)
-      this.setState({ percentage: (this.state.percentage+9) })  
+      if (this.state.id === null)
+        this.setState({ percentage: (this.state.percentage + 9) })
       this.setState({ id: e.target.value })
     }
     else if (e.target.name === 'reserve') {
-      if(this.state.slot===null)
-        this.setState({ percentage: (this.state.percentage+9) })  
+      if (this.state.slot === null)
+        this.setState({ percentage: (this.state.percentage + 9) })
       this.setState({
         slot: schedule.slot,
         day: schedule.day
       })
     }
-    else if(e.target.name=='exp')
-    {
-      if(this.state.exp===null)
-        this.setState({ percentage: (this.state.percentage+8) })  
+    else if (e.target.name == 'exp') {
+      if (this.state.exp === null)
+        this.setState({ percentage: (this.state.percentage + 8) })
       this.setState({
-        exp:e.target.value
+        exp: e.target.value
       })
     }
-    else if(e.target.name=='hobbies')
-    {
-      if(this.state.hobbies===null)
-        this.setState({ percentage: (this.state.percentage+8) })  
+    else if (e.target.name == 'hobbies') {
+      if (this.state.hobbies === null)
+        this.setState({ percentage: (this.state.percentage + 8) })
       this.setState({
-        hobbies:e.target.value
+        hobbies: e.target.value
       })
     }
   }
 
   submit = (e) => {
     e.preventDefault()
-    this.setState({ percentage: 100 })  
+    this.setState({ percentage: 100 })
     console.log(this.state)
     const newApplcant = {
       email: this.state.email,
@@ -165,8 +163,8 @@ class Register extends React.Component {
       firstPrefrence: this.state.First,
       secondPrefrence: this.state.Second,
       why: this.state.why,
-      hobbies:this.state.hobbies,
-      exp:this.state.exp,
+      hobbies: this.state.hobbies,
+      exp: this.state.exp,
       reservation: {
         day: this.state.day,
         slot: this.state.slot
@@ -330,68 +328,68 @@ class Register extends React.Component {
       <div >
         <FormGroup>
           <Label for="experience">previous Experience</Label>
-          <Input type="text" name="exp" id="exampleexp" placeholder="type NA if there's none" onInput={(e) => this.Input(e)}/>
+          <Input type="text" name="exp" id="exampleexp" placeholder="type NA if there's none" onInput={(e) => this.Input(e)} />
         </FormGroup>
         <FormGroup>
           <Label for="hobbies">Hobbies</Label>
-          <Input type="text" name="hobbies" id="hobbies" placeholder="any hobbies you have seperated by commas" onInput={(e) => this.Input(e)}/>
+          <Input type="text" name="hobbies" id="hobbies" placeholder="any hobbies you have seperated by commas" onInput={(e) => this.Input(e)} />
         </FormGroup>
       </div>
     );
-    const table = this.state.schedules===null?
-    (
-      <div>
-        <h4>please choose a first preference first</h4>
-      </div>
-    )
-    :
-    (
-      <div >
-        <h3>Choose  a reservation slot</h3>
+    const table = this.state.schedules === null ?
+      (
+        <div>
+          <h4>please choose a first preference first</h4>
+        </div>
+      )
+      :
+      (
+        <div >
+          <h3>Choose  a reservation slot</h3>
 
-        <Table>
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>Slot</th>
-              <th>Reserve</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.schedules.map(schedule => {
-              const x = (
-                <tr>
-                  <td>{schedule.day}</td>
-                  <td>{schedule.slot}</td>
-                  <td>{
-                    !schedule.reserved ?
-                      (<div>
-                        <FormGroup check>
+          <Table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Slot</th>
+                <th>Reserve</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.schedules.map(schedule => {
+                const x = (
+                  <tr>
+                    <td>{schedule.day}</td>
+                    <td>{schedule.slot}</td>
+                    <td>{
+                      !schedule.reserved ?
+                        (<div>
+                          <FormGroup check>
+                            <Label check>
+                              <Input type="radio" name="reserve" onInput={(e) => this.Input(e, schedule)} />{' '}
+                              Choose {schedule.day} {schedule.slot}
+                            </Label>
+                          </FormGroup>
+                          <br />
+                        </div>)
+                        :
+                        (<div><FormGroup check disabled>
                           <Label check>
-                            <Input type="radio" name="reserve" onInput={(e) => this.Input(e, schedule)} />{' '}
-                            Choose {schedule.day} {schedule.slot}
-                          </Label>
-                        </FormGroup>
-                        <br />
-                      </div>)
-                      :
-                      (<div><FormGroup check disabled>
-                        <Label check>
-                          <Input type="radio" name="radio1" disabled />{' '}
-                          {schedule.day} {schedule.slot} reserved already!
+                            <Input type="radio" name="radio1" disabled />{' '}
+                            {schedule.day} {schedule.slot} reserved already!
                         </Label>
-                      </FormGroup>
-                      </div>)
-                  }</td>
-                </tr>
-              )
-              return x
-            })}
+                        </FormGroup>
+                        </div>)
+                    }</td>
+                  </tr>
+                )
+                return x
+              })}
 
-          </tbody>
-        </Table>
-      </div>
-    );
+            </tbody>
+          </Table>
+        </div>
+      );
 
     return (
       <div>
@@ -404,6 +402,10 @@ class Register extends React.Component {
               isAuthenticated={this.props.isAuthenticated}
               logout={this.props.logout}
             />}
+          changeColorOnScroll={{
+            height: 100,
+            color: "white"
+          }}
           {...rest}
         />
         <div
