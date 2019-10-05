@@ -38,7 +38,6 @@ class LandingPage extends React.Component {
         <Header
           color="transparent"
           routes={dashboardRoutes}
-          brand="Incubator"
           rightLinks={
             <HeaderLinks
               isAuthenticated={this.props.isAuthenticated}
@@ -47,7 +46,7 @@ class LandingPage extends React.Component {
           }
           fixed
           changeColorOnScroll={{
-            height: 400,
+            height: 100,
             color: "white"
           }}
           {...rest}

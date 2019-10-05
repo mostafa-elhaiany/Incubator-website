@@ -94,8 +94,11 @@ class Login extends React.Component {
         <Header
           absolute
           color="transparent"
-          brand="Incubator"
           rightLinks={<HeaderLinks />}
+          changeColorOnScroll={{
+            height: 100,
+            color: "white"
+          }}
           {...rest}
         />
         <div

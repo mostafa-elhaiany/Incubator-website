@@ -11,10 +11,13 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
+
 // @material-ui/icons
 import Menu from "@material-ui/icons/Menu";
 // core components
 import styles from "assets/jss/components/headerStyle.js";
+
+import logo from "assets/img/logo192.png";
 
 const useStyles = makeStyles(styles);
 
@@ -60,7 +63,11 @@ export default function Header(props) {
     [classes.absolute]: absolute,
     [classes.fixed]: fixed
   });
-  const brandComponent = <Button className={classes.title} href='/'>Incubator</Button>;
+  const brandComponent = (
+    <Button onClick={() => props.history.push("/")} className={classes.title}>
+      <img src={logo} title="Logo" alt="Logo" width="70px" height="70px" />
+    </Button>
+  );
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
@@ -71,8 +78,8 @@ export default function Header(props) {
               {leftLinks}
             </Hidden>
           ) : (
-            brandComponent
-          )}
+              brandComponent
+            )}
         </div>
         <Hidden smDown implementation="css">
           {rightLinks}

@@ -29,9 +29,9 @@ export default function Footer(props) {
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
-        <div className={classes.left}>
-          <List className={classes.list}>
-            <ListItem className={classes.inlineBlock}>
+        {/*<div className={classes.left}>
+         <List className={classes.list}>
+             <ListItem className={classes.inlineBlock}>
               <a
                 href="https://www.creative-tim.com/?ref=mkr-footer"
                 className={classes.block}
@@ -67,19 +67,11 @@ export default function Footer(props) {
                 Licenses
               </a>
             </ListItem>
-          </List>
-        </div>
+          </List> 
+        </div>*/}
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} , made with{" "}
-          <Favorite className={classes.icon} /> by{" "}
-          <a
-            href="https://www.creative-tim.com?ref=mkr-footer"
-            className={aClasses}
-            target="_blank"
-          >
-            Creative Tim
-          </a>{" "}
-          for a better web.
+          &copy; Incubator {1900 + new Date().getYear()} , made with{" "}
+          <Favorite className={classes.icon} />
         </div>
       </div>
     </footer>
