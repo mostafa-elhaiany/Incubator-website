@@ -61,8 +61,6 @@ app.get('/', (req, res) => {
   res.send('homepage')
 })
 
-
-
 // 500 internal server error handler
 app.use((err, _req, res, next) => {
   if (err.statusCode === 400) {
