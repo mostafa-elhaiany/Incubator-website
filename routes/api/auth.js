@@ -7,6 +7,8 @@ const auth = require('../../middleware/auth')
 //authenticate User
 router.post('/user',controller.auth)
 
+//route to change passwords for users
+router.put('/changePassword/:id',auth,controller.changePassword)
 
 //private get User
 router.get('/user', auth ,controller.user)

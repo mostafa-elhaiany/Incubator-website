@@ -24,6 +24,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import styles from "assets/jss/views/ProfilePage/profilePage.js";
+import ChangePassword from "./components/ChangePassword";
 
 const useStyles = makeStyles(styles);
 
@@ -39,6 +40,7 @@ function Profile(props) {
   const applicant = props.type==='applicant'? (
                   <p>your application here</p>
     ):(<p>you're not an applicant with application so nothing to view here :D</p>) 
+
   return (
     <div>
       <Header
@@ -95,7 +97,7 @@ function Profile(props) {
                                 <p>NAME:{props.user.fullName}</p>
                                 <p>email:{props.user.email}</p>
                                 
-                                <Button >change password</Button> 
+                                <ChangePassword type={props.type} id={props.user._id} config={{headers:{'Content-type': 'application/json','x-auth-token':props.token}}} />
                             </div>
                             {/* <img
                               alt="..."
@@ -129,33 +131,7 @@ function Profile(props) {
                       tabContent: (
                         <GridContainer justify="center">
                           <GridItem xs={12} sm={12} md={4}>
-                            {/* <img
-                              alt="..."
-                              // src={work4}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={studio3}
-                              className={navImageClasses}
-                            />
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={4}>
-                            <img
-                              alt="..."
-                              // src={work2}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={work1}
-                              className={navImageClasses}
-                            />
-                            <img
-                              alt="..."
-                              // src={studio1}
-                              className={navImageClasses}
-                            /> */}
+                            <p>more features will be comming soon :D</p>
                           </GridItem>
                         </GridContainer>
                       )
@@ -193,7 +169,8 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
   user: state.auth.user,
-  type: state.auth.type
+  type: state.auth.type,
+  token: state.auth.token
 })
 
 export default connect(mapStateToProps)(Profile)
